@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { login } from '../../actions/userAction';
+import './style.css'
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -11,21 +12,58 @@ class LoginPage extends React.Component {
         this.state = {
             username: '',
             password: '',
+            rememberMe: false,
             submitted: false
         };
+        this.handleUsernameChange = this.handleUsernameChange.bind(this)
+        this.handlePasswordChange = this.handlePasswordChange.bind(this)
+        this.handleRememberMe = this.handleRememberMe.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange(e) {
+    handleUsernameChange(e) {
+        this.setState({ username: evt.target.value });
+    }
+
+    handlePasswordChange(e) {
+        this.setState({ password: evt.target.value });
+    }
+
+    handleRememberMe(e) {
+        this.setState({ rememberMe: evt.target.checked });
     }
 
     handleSubmit(e) {
+        const { username, password, rememberMe } = this.state
         e.preventDefault();
+        this.setState({ submitted: true })
+        if (this.state.submitted) {
+            this.props.login(username, password, rememberMe);
+        }
     }
 
     render() {
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h2>Login</h2>
+            <div className={'login-body'} horizontal>
+                <div className="col-md-6 col-md-offset-3">
+                    <h2>Login</h2>
+                    <form name="form" onSubmit={this.handleSubmit}>
+                        <div className='form-group'>
+                            <label htmlFor="username">Username</label>
+                            <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleUsernameChange} />                       
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor="password">Password</label>
+                            <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
+                        </div>
+                        <div className="form-group">
+                            <input type="checkbox" name="rememberMe" checked={this.state.rememberMe} value={this.state.rememberMe} onChange={this.handleRememberMe} />
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }
