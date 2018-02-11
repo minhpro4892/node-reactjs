@@ -22,23 +22,23 @@ class LoginPage extends React.Component {
     }
 
     handleUsernameChange(e) {
-        this.setState({ username: evt.target.value });
+        this.setState({ username: e.target.value });
     }
 
     handlePasswordChange(e) {
-        this.setState({ password: evt.target.value });
+        this.setState({ password: e.target.value });
     }
 
     handleRememberMe(e) {
-        this.setState({ rememberMe: evt.target.checked });
+        this.setState({ rememberMe: e.target.checked });
     }
 
     handleSubmit(e) {
-        const { username, password, rememberMe } = this.state
         e.preventDefault();
         this.setState({ submitted: true })
         if (this.state.submitted) {
-            this.props.login(username, password, rememberMe);
+            console.log(this.props)
+            this.props.login(this.state.username, this.state.password, this.state.rememberMe);
         }
     }
 
@@ -89,4 +89,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default LoginPage;
+export default connect(mapDispatchToProps, mapStateToProps)(LoginPage);

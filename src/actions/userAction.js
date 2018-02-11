@@ -1,4 +1,4 @@
-import { userConstants } from './../constants/user';
+import { userConstants } from './../constants/user';;
 import {
     userLoginApi
 } from '../constants/ApiConfigs'
