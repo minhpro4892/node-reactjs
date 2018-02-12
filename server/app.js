@@ -8,6 +8,14 @@ const app = express();
 
 // parse application/json
 app.use(bodyParser.json());
+app.use(function(req, res, next){
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+  res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type, x-request-id'); // If needed
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+})
+
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 

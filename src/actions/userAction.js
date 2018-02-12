@@ -17,7 +17,7 @@ function loginRequest(user) {
 }
 
 function loginSuccess(payload) {
-    saveUserToLocal(payload.res);
+    saveUserToLocal(payload.res.user);
     return {
         type: userConstants.LOGIN_SUCCESS,
         user: payload.res.user,

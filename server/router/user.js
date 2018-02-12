@@ -5,9 +5,7 @@ var api = {
 }
 
 module.exports = function (app) {
-    console.log('debug login func')
-    app.post(api.login, function(req, res) {
-        console.log('debug login func 1')
+    app.post(api.login, function(req, res, next) {
         res.send({
             status: 200,
             user: {
