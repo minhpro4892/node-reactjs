@@ -38,7 +38,6 @@ class LoginPage extends React.Component {
         e.preventDefault();
         this.setState({ submitted: true })
         if (this.state.submitted) {
-            console.log(this.props)
             this.props.login(this.state.username, this.state.password, this.state.rememberMe);
         }
     }
