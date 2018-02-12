@@ -14,7 +14,7 @@ function initializeState() {
     return Object.assign({}, initialState, userProfile);
 }
 
-export function auth(state = initializeState(), action) {
+export default  function auth(state = initializeState(), action = {}) {
     switch (action.type) {
         case userConstants.LOGIN_REQUEST:
             return Object.assign({}, state, { loggingIn: true });
@@ -33,6 +33,6 @@ export function auth(state = initializeState(), action) {
             window.location.href = '/login'
             return initialState;
         default:
-            return initialState
+            return state;
     }
 }

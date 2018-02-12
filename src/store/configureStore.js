@@ -1,17 +1,27 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import authentication from './../reducers/authenticationReducer'
+import auth from './../reducers/authenticationReducer';
+import { routerReducer  } from 'react-router-redux'
 const rootReducer = combineReducers({
-    authentication
+    auth,
+    routing: routerReducer
 });
 
 const loggerMiddleware = createLogger();
+const initialState = {};
 
-export const store = createStore(
-    rootReducer,
-    applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware
-    )
-);
+export default function configureStore() {
+    let store;
+    store = createStore(
+        rootReducer,
+        initialState,
+        compose(
+            applyMiddleware(
+                thunkMiddleware,
+                loggerMiddleware
+            )
+        )
+    );
+    return store;
+}

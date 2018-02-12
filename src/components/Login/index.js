@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Cmponent } from 'react';
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -69,6 +70,17 @@ class LoginPage extends React.Component {
     }
 }
 
+LoginPage.contextTypes = {
+    router: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
+};
+
+LoginPage.propTypes = {
+    user: PropTypes.object,
+    loginError: PropTypes.object,
+    location: PropTypes.object
+};
+
 function mapStateToProps(state) {
     const { auth } = state;
     if (auth) {
@@ -89,4 +101,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapDispatchToProps, mapStateToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
