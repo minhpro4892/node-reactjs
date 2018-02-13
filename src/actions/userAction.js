@@ -1,10 +1,12 @@
 import { userConstants } from './../constants/user';;
 import {
-    userLoginApi
+    userLoginApi,
+    userLogoutApi
 } from '../constants/ApiConfigs'
 import {
     callApi,
     saveUserToLocal,
+    removeUserProfile,
     UrlBuilder
 } from "../utils/apiUtils";
 
@@ -17,11 +19,11 @@ function loginRequest(user) {
 }
 
 function loginSuccess(payload) {
-    saveUserToLocal(payload.user);
+    saveUserToLocal(payload.res.user);
     return {
         type: userConstants.LOGIN_SUCCESS,
-        user: payload.user,
-        token: payload.token || '',
+        user: payload.res.user,
+        token: payload.res.token,
         fleet: []
     };
 }
@@ -50,5 +52,40 @@ export function login(username, password, remember) {
         loginSuccess,
         loginFailure,
         true
+    );
+}
+
+function logoutRequest(user) {
+    return {
+        type: userConstants.LOGOUT_REQUEST,
+        user
+    };
+}
+
+function logoutSuccess(paylad) {
+    removeUserProfile()
+    return {
+        type: userConstants.LOGOUT_SUCCESS,
+        user: null
+    };
+}
+
+function logoutFailure(error) {
+    return {
+        type: userConstants.LOGOUT_FAILURE,
+        error
+    };
+}
+
+export function logout(user) {
+    const config = {
+        method: "post",
+    }
+    return callApi(
+        userLogoutApi,
+        config,
+        logoutRequest,
+        logoutSuccess,
+        logoutFailure
     );
 }

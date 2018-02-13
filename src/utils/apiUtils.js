@@ -108,6 +108,10 @@ export function UrlBuilder(url, options) {
     return url;
 }
 
+export function removeUserProfile() {
+    localStorage.removeItem('user');
+}
+
 export function loadUserProfile() {
     let user = localStorage.getItem('user');
     if (!user) return null;

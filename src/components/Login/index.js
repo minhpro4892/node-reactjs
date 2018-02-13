@@ -22,6 +22,33 @@ class LoginPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    componentWillMount() {
+        if (this.props.user) {
+            // logged in, let's show redirect if any, or show home
+            try {
+                const redirect = this.props.location.query.redirect;
+                this.context.router.replace(redirect);
+            } catch (err) {
+                this.context.router.replace("/");
+            }
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.user) {
+            // logged in, let's show redirect if any, or show home
+            try {
+                const redirect = this.props.location.query.redirect;
+                this.context.router.replace(redirect);
+            } catch (err) {
+                this.context.router.replace("/");
+            }
+        }
+        if (nextProps.loginError) {
+            this.setState({ errorCode: nextProps.loginError.errorCode })
+        }
+    }
+
     handleUsernameChange(e) {
         this.setState({ username: e.target.value });
     }
