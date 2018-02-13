@@ -3,11 +3,12 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 var bodyParser = require('body-parser');
-
+var session = require('express-session');
 const app = express();
 
 // parse application/json
 app.use(bodyParser.json());
+
 app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
@@ -15,6 +16,13 @@ app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 })
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
