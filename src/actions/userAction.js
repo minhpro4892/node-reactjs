@@ -17,10 +17,10 @@ function loginRequest(user) {
 }
 
 function loginSuccess(payload) {
-    saveUserToLocal(payload.res.user);
+    saveUserToLocal(payload.user);
     return {
         type: userConstants.LOGIN_SUCCESS,
-        user: payload.res.user,
+        user: payload.user,
         token: payload.token || '',
         fleet: []
     };

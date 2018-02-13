@@ -7,7 +7,6 @@ var api = {
 module.exports = function (app) {
     app.post(api.login, function(req, res, next) {
         res.send({
-            status: 200,
             user: {
                 username: 'minh_pro4892'
             }
