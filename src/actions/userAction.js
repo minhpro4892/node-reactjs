@@ -21,7 +21,7 @@ function loginSuccess(payload) {
     return {
         type: userConstants.LOGIN_SUCCESS,
         user: payload.res.user,
-        token: payload.token,
+        token: payload.token || '',
         fleet: []
     };
 }
