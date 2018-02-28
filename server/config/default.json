@@ -1,0 +1,15 @@
+{
+    "mongo": {
+        "host": "mongodb://localhost/qupworld",
+        "options": {
+            "server": {
+                "socketOptions": {
+                "keepAlive": 1
+                }
+            },
+            "auto_reconnect": true,
+            "user": "",
+            "pass": ""
+        }
+    }
+}

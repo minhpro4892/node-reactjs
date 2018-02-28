@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var session = require('express-session');
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
+require('./config/mongo').configMongoDb(mongoose);
 
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {

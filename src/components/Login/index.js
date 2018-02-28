@@ -87,6 +87,9 @@ class LoginPage extends React.Component {
                             <input type="checkbox" name="rememberMe" checked={this.state.rememberMe} value={this.state.rememberMe} onChange={this.handleRememberMe} />
                         </div>
                         <div className="form-group">
+                            <Link to="reset-password">Forgot Password</Link>
+                        </div>
+                        <div className="form-group">
                             <button className="btn btn-primary">Login</button>
                         </div>
                     </form>
