@@ -2,6 +2,7 @@ var BaseCtrl = require('./base');
 var _ = require('lodash');
 var Promise = require('bluebird');
 var util = require('util');
+var AccountModel = require("../model/mongo/AccountModel");
 
 function UserCtrl(_params) {
     _params = _params || {};
@@ -20,6 +21,12 @@ UserCtrl.prototype.login = function (params, tracer) {
         })
     })
     
+}
+
+UserCtrl.prototype.create = function (params, tracer) {
+    var self = this;
+    var accountModel = new AccountModel(params);
+    accountModel.save();
 }
 
 module.exports = UserCtrl;

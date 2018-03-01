@@ -1,7 +1,20 @@
 var config = require('config');
 
 exports.configMongoDb = function(mongoose) {
-    var mongoConfig = config.get('mongo');
+    // var mongoConfig = config.get('mongo');
+    var mongoConfig = {
+        "host": "mongodb://localhost/qupworld",
+        "options": {
+            "server": {
+                "socketOptions": {
+                    "keepAlive": 1
+                }
+            },
+            "auto_reconnect": true,
+            "user": "",
+            "pass": ""
+        }
+    }
     var connect = function() {
         mongoose.connect(mongoConfig.host, mongoConfig.options);
     };
