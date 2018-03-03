@@ -9,6 +9,11 @@ function AccountModel(_params) {
 }
 util.inherits(AccountModel, BaseModel);
 
+AccountModel.prototype.save = function(_params) {
+    var account = new Account();
+    return account.save(_params);
+}
+
 module.exports = AccountModel; 
 
 
