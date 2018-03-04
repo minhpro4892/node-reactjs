@@ -9,26 +9,19 @@ var crypto = require('crypto');
 function UserCtrl(_params) {
     _params = _params || {};
     BaseCtrl.call(this, _params);
+    this.accountModel =  new AccountModel();
 }
 util.inherits(UserCtrl, BaseCtrl);
 
 UserCtrl.prototype.login = function (params, tracer) {
     var self = this;
-    return new Promise((resolve, reject) => {
-        return resolve({
-            user: {
-                username: 'minh_pro4892'
-            },
-            token: '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
-        })
-    })
-    
+    return self.accountModel.findOne(params);
 }
 
 UserCtrl.prototype.create = function (params, tracer) {
     var self = this;
     var accountModel = new AccountModel();
-    var user = _.pick(params, [
+    var user = _.pick(params, [   
         "username",
         "phoneNumber"
     ]);

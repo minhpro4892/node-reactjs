@@ -19,10 +19,8 @@ module.exports = function (app) {
 
     app.post(api.login, function(req, res, next) {
         console.log(req.session);
-        var userCtrl = new UserCtrl({
-            username: req.body.username
-        });
-        userCtrl.login(req.body.username).then(function (response) {
+        var userCtrl = new UserCtrl({});
+        userCtrl.login(req.body).then(function (response) {
             res.send({ error: null, res: response });
         })
         .catch(function (error) {

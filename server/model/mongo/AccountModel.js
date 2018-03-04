@@ -14,6 +14,28 @@ AccountModel.prototype.save = function(_params) {
     return account.save(_params);
 }
 
+AccountModel.prototype.findOne = function(_params) {
+    var accountQueryParams = {
+        query: {
+            username: _params.username
+        }
+    }
+    return Account.findOne(accountQueryParams)
+    .then(function(foundAccountByUsername) {
+        if (!foundAccountByUsername) {
+            return {
+                status: 404,
+                message: "User not found"
+            }
+        }
+        return {
+            status: 200,
+            user: foundAccountByUsername,
+            token: '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
+        }
+    });
+}
+
 module.exports = AccountModel; 
 
 
