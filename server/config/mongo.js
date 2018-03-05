@@ -3,16 +3,14 @@ var config = require('config');
 exports.configMongoDb = function(mongoose) {
     // var mongoConfig = config.get('mongo');
     var mongoConfig = {
-        "host": "mongodb://localhost/qupworld",
+        "host": "mongodb://localhost:27017/qupworld",
         "options": {
             "server": {
                 "socketOptions": {
                     "keepAlive": 1
                 }
             },
-            "auto_reconnect": true,
-            "user": "",
-            "pass": ""
+            "auto_reconnect": true
         }
     }
     var connect = function() {

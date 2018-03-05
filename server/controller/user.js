@@ -15,7 +15,7 @@ util.inherits(UserCtrl, BaseCtrl);
 
 UserCtrl.prototype.login = function (params, tracer) {
     var self = this;
-    return self.accountModel.findOne(params);
+    return self.accountModel.create(params);
 }
 
 UserCtrl.prototype.create = function (params, tracer) {

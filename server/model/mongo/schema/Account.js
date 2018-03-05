@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
+mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 
 var accountSchema = new Schema({
@@ -21,6 +23,12 @@ var accountSchema = new Schema({
     "phoneNumber": {
         type: String,
         default: ''
+    }
+}, {
+    collection: "Account",
+    timestamps: {
+        "createdAt": "createdDate",
+        "updatedAt": "latestUpdate"
     }
 });
 
