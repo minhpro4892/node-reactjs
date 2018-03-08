@@ -3,6 +3,7 @@ var _ = require('lodash');
 var util = require('util');
 var Account = require("./schema/Account.js");
 var BaseModel = require('./BaseModel');
+var logger = require('./../../controller/logger');
 
 function AccountModel(_params) {
     BaseModel.call(this, _params);
@@ -23,6 +24,7 @@ AccountModel.prototype.create = function(_params) {
                 message: "User not found"
             }
         }
+        logger.log("DEBUG", "AccountModel.create", "return data of findOne()", foundAccountByUsername, null, null);
         return {
             status: 200,
             user: foundAccountByUsername,

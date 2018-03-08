@@ -18,7 +18,6 @@ module.exports = function (app) {
     });
 
     app.post(api.login, function(req, res, next) {
-        console.log(req.session);
         var userCtrl = new UserCtrl({});
         userCtrl.login(req.body).then(function (response) {
             res.send({ error: null, res: response });

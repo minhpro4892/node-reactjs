@@ -11,5 +11,21 @@
             "user": "",
             "pass": ""
         }
+    },
+    "logger": {
+      "debug": {
+        "name": "debug-file",
+        "level": "debug",
+        "datePattern": "yyyy-MM-dd",
+        "prepend": true,
+        "filename": "/LAPTRINH/logs/.debug.log",
+        "maxsize": 2.5e+7,
+        "json": false,
+        "timestamp": true,
+        "handleExceptions": true,
+        "zippedArchive": true,
+        "maxDays": 30
+      },
+      "console": false
     }
 }
