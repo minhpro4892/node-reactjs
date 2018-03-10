@@ -35,4 +35,14 @@ UserCtrl.prototype.create = function (params, tracer) {
     return accountModel.save(user);
 }
 
+UserCtrl.prototype.update = function(params, tracer) {
+    var seft = this;
+    var user = _.pick(params, [
+        "_id",
+        "username",
+        "phoneNumber"
+    ]);
+    return seft.accountModel.update(user);
+}
+
 module.exports = UserCtrl;

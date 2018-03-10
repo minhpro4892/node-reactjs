@@ -36,6 +36,40 @@ AccountModel.prototype.create = function(_params) {
     });
 }
 
+AccountModel.prototype.update = function(_params) {
+    return Promise.all([
+        Account.findOne({
+            _id: _params._id
+        }),
+        Account.findOne({
+            username: _params.username,
+            _id: { $ne: _params._id}
+        })
+    ])
+    .spread(function(foundAccountById, foundAccountByUsername) {
+        if (!foundAccountById) {
+            return {
+                status: 404,
+                message: "Username not found",
+                errorCode: "USERNAME_NOT_FOUND"
+            }
+        }
+        if (foundAccountByUsername) {
+            return {
+                status: 400,
+                message: 'Username existed',
+                errorCode: 'USERNAME_EXISTED'
+            }
+        }
+        foundAccountById.set("username", _params.username);
+        foundAccountById.set("phoneNumber", _params.phoneNumber);
+        return foundAccountById.save();
+    })
+    .catch(function(error) {
+        return error;
+    });
+}
+
 module.exports = AccountModel; 
 
 
