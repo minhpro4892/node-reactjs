@@ -61,11 +61,13 @@ AccountModel.prototype.update = function(_params) {
                 errorCode: 'USERNAME_EXISTED'
             }
         }
+        logger.log("DEBUG", "AccountModel.update", "return data of findOne()", foundAccountById, null, null);
         foundAccountById.set("username", _params.username);
         foundAccountById.set("phoneNumber", _params.phoneNumber);
         return foundAccountById.save();
     })
     .catch(function(error) {
+        logger.log("DEBUG", "AccountModel.update", "return data of findOne()", error, null, null);
         return error;
     });
 }
