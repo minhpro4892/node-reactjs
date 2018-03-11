@@ -4,6 +4,7 @@ var api = {
     "create": "/api/user/create",
     "update": "/api/user/update",
     "resetPassword": "/api/user/resetPassword",
+    "changePassword": "/api/user/changePassword",
     "login": "/api/user/login",
     "logout": "/api/user/logout",
 }
@@ -33,6 +34,16 @@ module.exports = function (app) {
     app.post(api.resetPassword, function(req, res, next) {
         var userCtrl = new UserCtrl({});
         userCtrl.resetPassword(req.body).then(function(response) {
+            res.send({ error: null, res: response });
+        })
+        .catch(function(error) {
+            res.send({ error: error, res: null })
+        });
+    });
+
+    app.post(api.changePassword, function(req, res, next) {
+        var userCtrl = new UserCtrl({});
+        userCtrl.changePassword(req.body).then(function(response) {
             res.send({ error: null, res: response });
         })
         .catch(function(error) {

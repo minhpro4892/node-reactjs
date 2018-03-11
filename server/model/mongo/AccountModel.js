@@ -72,6 +72,36 @@ AccountModel.prototype.update = function(_params) {
     });
 }
 
+AccountModel.prototype.changePassword = function(_params) {
+    return AccountModel.findOne({ _id: _params._id})
+    .then(function(foundAccountById) {
+        if(!foundAccountById) {
+            return {
+                status: 404,
+                message: "User not found",
+                errorCode: "USER_NOT_FOUND"
+            }
+        }
+        if (foundAccountById._id != _params._id) {
+            return {
+                status: 400,
+                message: "Password is incorrect",
+                errorCode: "WRONG_PASSWORD"
+            }
+        }
+        if (_params.newPassword != _params.retypePassword) {
+            return {
+                status: 400,
+                message: "Password is incorrect",
+                errorCode: "WRONG_PASSWORD"
+            }
+        }
+
+        foundAccountById.set("password", _params.newPassword);
+        foundAccountById.save();
+    }) 
+}
+
 module.exports = AccountModel; 
 
 
