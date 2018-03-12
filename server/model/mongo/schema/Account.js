@@ -8,6 +8,23 @@ var accountSchema = new Schema({
         type: String,
         default: ''
     },
+    "firstName": {
+        type: String,
+        default: ''
+    },
+    "lastName": {
+        type: String,
+        default: ''
+    },
+    "token": { type: String },
+    "isAdmin": {
+        type: Boolean,
+        default: false
+    },
+    "defaultPw": {
+        type: Boolean,
+        default: false
+    },
     "password": {
         type: String,
         default: ''
@@ -23,6 +40,26 @@ var accountSchema = new Schema({
     "phoneNumber": {
         type: String,
         default: ''
+    },
+    "email": {
+        type: String,
+        default: ''
+    },
+    "birthyear": {
+        type: Date,
+        default: new Date()
+    },
+    "address": {
+        type: String,
+        default: ''
+    },
+    "roleName": {
+        type: String,
+        default: 'user'
+    },
+    "tokenExpiredAt": {
+        type: Date,
+        default: new Date()
     }
 }, {
     collection: "Account",
