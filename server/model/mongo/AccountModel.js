@@ -5,6 +5,10 @@ var Account = require("./schema/Account.js");
 var BaseModel = require('./BaseModel');
 var logger = require('./../../controller/logger');
 
+var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
+var domain = 'www.mydomain.com';
+var mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
+
 function AccountModel(_params) {
     BaseModel.call(this, _params);
 }
@@ -112,8 +116,35 @@ AccountModel.prototype.delete = function (_params) {
     })
 }
 
+AccountModel.prototype.resetPassword = function (_params) {
+    return AccountModel.findOne({ _id: _params._id })
+    .then(function (foundAccountById) {
+        if (!foundAccountById) {
+            return {
+                status: 404,
+                message: "User not found",
+                errorCode: "USER_NOT_FOUND"
+            }
+        }
+        return foundAccountById;
+    })
+    .then(function (user) {
+        var data = {
+            from: 'Excited User <me@samples.mailgun.org>',
+            to: [user.email],
+            subject: 'Testing mailgun to send a new reset password',
+            text: user.password
+        };
+
+        mailgun.messages().send(data, function (error, body) {
+            console.log(body);
+
+        });
+    })
+}
+
 AccountModel.prototype.changePassword = function(_params) {
-    return AccountModel.findOne({ _id: _params._id})
+    return AccountModel.findOne({ _id: _params._id })
     .then(function(foundAccountById) {
         if(!foundAccountById) {
             return {

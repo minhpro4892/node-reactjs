@@ -6,10 +6,6 @@ var AccountModel = require("../model/mongo/AccountModel");
 var generatePassword = require('generate-password');
 var crypto = require('crypto');
 
-var api_key = 'key-XXXXXXXXXXXXXXXXXXXXXXX';
-var domain = 'www.mydomain.com';
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
-
 function UserCtrl(_params) {
     _params = _params || {};
     BaseCtrl.call(this, _params);
@@ -61,23 +57,13 @@ UserCtrl.prototype.delete = function (params, tracer) {
 
 UserCtrl.prototype.resetPassword = function(params, tracer) {
     var seft = this;
-    var password = generatePassword.generate({
+    params.password = generatePassword.generate({
         length: 10,
         uppercase: false,
         strict: true,
         numbers: true
     });
-    var data = {
-        from: 'Excited User <me@samples.mailgun.org>',
-        to: 'serobnic@mail.ru',
-        subject: 'Testing mailgun to send a new reset password',
-        text: password
-      };
-      
-      mailgun.messages().send(data, function (error, body) {
-        console.log(body);
-
-      });
+    return seft.accountModel.resetPassword(params);
 }
 
 UserCtrl.prototype.changePassword = function(params, tracer) {
