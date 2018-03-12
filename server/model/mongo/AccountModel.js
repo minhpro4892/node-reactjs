@@ -93,6 +93,25 @@ AccountModel.prototype.update = function(_params) {
     });
 }
 
+AccountModel.prototype.delete = function (_params) {
+    return AccountModel.findOne({ _id: _params._id })
+    .then(function (foundAccountById) {
+        if (!foundAccountById) {
+            return {
+                status: 404,
+                message: "User not found",
+                errorCode: "USER_NOT_FOUND"
+            }
+        }
+        logger.log("DEBUG", "AccountModel.delete", "remove data one account", foundAccountById, null, null);
+        return foundAccountById.remove();
+    })
+        .catch(function (error) {
+            logger.log("ERROR", "AccountModel.delete", "error", null, error, null);
+        return error;
+    })
+}
+
 AccountModel.prototype.changePassword = function(_params) {
     return AccountModel.findOne({ _id: _params._id})
     .then(function(foundAccountById) {

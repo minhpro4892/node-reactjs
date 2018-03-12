@@ -4,6 +4,7 @@ var api = {
     "find": "/api/user/find",
     "create": "/api/user/create",
     "update": "/api/user/update",
+    "delete": "/api/user/delete",
     "resetPassword": "/api/user/resetPassword",
     "changePassword": "/api/user/changePassword",
     "login": "/api/user/login",
@@ -38,6 +39,16 @@ module.exports = function (app) {
         .catch(function(error) {
             res.send({ error: error, res: null })
         });
+    });
+
+    app.post(api.delete, function (req, res, next) {
+        var userCtrl = new UserCtrl({});
+        userCtrl.delete(req.body).then(function (response) {
+            res.send({ error: null, res: response });
+        })
+            .catch(function (error) {
+                res.send({ error: error, res: null })
+            });
     });
 
     app.post(api.resetPassword, function(req, res, next) {

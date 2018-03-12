@@ -54,6 +54,11 @@ UserCtrl.prototype.update = function(params, tracer) {
     return seft.accountModel.update(user);
 }
 
+UserCtrl.prototype.delete = function (params, tracer) {
+    var seft = this;
+    return seft.accountModel.delete(user);
+}
+
 UserCtrl.prototype.resetPassword = function(params, tracer) {
     var seft = this;
     var password = generatePassword.generate({
