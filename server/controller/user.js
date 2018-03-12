@@ -17,6 +17,11 @@ function UserCtrl(_params) {
 }
 util.inherits(UserCtrl, BaseCtrl);
 
+UserCtrl.prototype.find = function (params, tracer) {
+    var self = this;
+    return  self.accountModel.find(params);   
+}
+
 UserCtrl.prototype.login = function (params, tracer) {
     var self = this;
     return self.accountModel.create(params);

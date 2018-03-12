@@ -10,6 +10,26 @@ function AccountModel(_params) {
 }
 util.inherits(AccountModel, BaseModel);
 
+AccountModel.prototype.find = function (_params) {
+    return Promise.all([
+        Account.find({})
+        .sort(_params.sort || {username: 1})
+        .limit(_params.limit || 10)
+        .skip(_params.skip || 0)
+        .select("username phoneNUmber"),
+        Account.count()
+    ])
+        .spread(function (list, total) {
+            logger.log("DEBUG", "AccountModel.find", "return data of find()", list, null, null);
+            return {list, total};
+            
+        })
+        .catch(function (error) {
+            logger.log("ERROR", "AccountModel.find", "error", null, error, null);
+            return error;
+        })
+}
+
 AccountModel.prototype.save = function(_params) {
     var account = new Account(_params);
     return account.save();
@@ -31,7 +51,8 @@ AccountModel.prototype.create = function(_params) {
             token: '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
         }
     })
-    .catch(function(error) {
+        .catch(function (error) {
+            logger.log("ERROR", "AccountModel.find", "error", null, error, null);
         return error;
     });
 }
@@ -67,7 +88,7 @@ AccountModel.prototype.update = function(_params) {
         return foundAccountById.save();
     })
     .catch(function(error) {
-        logger.log("DEBUG", "AccountModel.update", "return data of findOne()", error, null, null);
+        logger.log("ERROR", "AccountModel.update", "error", null, error, null);
         return error;
     });
 }

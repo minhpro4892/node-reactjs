@@ -1,6 +1,7 @@
 var UserCtrl = require('../controller/user');
 var _ = require('lodash');
 var api = {
+    "find": "/api/user/find",
     "create": "/api/user/create",
     "update": "/api/user/update",
     "resetPassword": "/api/user/resetPassword",
@@ -10,6 +11,15 @@ var api = {
 }
 
 module.exports = function (app) {
+    app.post(api.find, function (req, res, next) {
+        var userCtrl = new UserCtrl({});
+        userCtrl.find(req.body).then(function (response) {
+            res.send({ error: null, res: response });
+        })
+            .catch(function (error) {
+                res.send({ error: error, res: null })
+            });
+    });
     app.post(api.create, function(req, res, next) {
         var userCtrl = new UserCtrl({});
         userCtrl.create(req.body).then(function(response) {
@@ -19,7 +29,6 @@ module.exports = function (app) {
             res.send({ error: error, res: null })
         });
     });
-
     
     app.post(api.update, function(req, res, next) {
         var userCtrl = new UserCtrl({});
