@@ -5,11 +5,12 @@ const path = require('path');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
+var joi = require("./middleware/validation/joi");
 const app = express();
 
 // parse application/json
 app.use(bodyParser.json());
-
+app.use(joi);
 app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
