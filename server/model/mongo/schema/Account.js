@@ -26,8 +26,7 @@ var accountSchema = new Schema({
         default: false
     },
     "password": {
-        type: String,
-        default: ''
+        type: String
     },
     "rememberMe": {
         type: Boolean,
@@ -68,5 +67,11 @@ var accountSchema = new Schema({
         "updatedAt": "latestUpdate"
     }
 });
+
+accountSchema.pre('save', function(next) {
+    this.set('userId', this._id);
+    this.set('fullName', `${this.firstName}${this.lastName}`);
+    next();
+}) 
 
 module.exports = mongoose.model("Account", accountSchema);

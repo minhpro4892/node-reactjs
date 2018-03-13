@@ -20,7 +20,9 @@ UserCtrl.prototype.find = function (params, tracer) {
 
 UserCtrl.prototype.login = function (params, tracer) {
     var self = this;
-    return self.accountModel.create(params);
+    var user = _.pick(params, ["username"]);
+    user.password = crypto.createHash("md5").update(params.password).digest("hex");
+    return self.accountModel.login(user);
 }
 
 UserCtrl.prototype.create = function (params, tracer) {

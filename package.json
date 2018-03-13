@@ -21,7 +21,7 @@
     "joi": "^13.1.2",
     "mailgun-js": "^0.16.0",
     "minimist": "^1.2.0",
-    "mongoose": "4.9.2",
+    "mongoose": "^4.9.2",
     "morgan": "^1.9.0",
     "prop-types": "^15.6.0",
     "react": "^15.6.2",

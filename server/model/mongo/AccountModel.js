@@ -39,13 +39,21 @@ AccountModel.prototype.save = function(_params) {
     return account.save();
 }
 
-AccountModel.prototype.create = function(_params) {
-    return Account.findOne({ username: _params.username }).select('username phoneNumber')
+AccountModel.prototype.login = function(_params) {
+    return Account.findOne({ username: _params.username })
     .then(function(foundAccountByUsername) {
         if (!foundAccountByUsername) {
             return {
                 status: 404,
-                message: "User not found"
+                message: "User not found",
+                errorCode: "USER_NOT_FOUND"
+            }
+        }
+        if (foundAccountByUsername.password != _params.password) {
+            return {
+                status: 400,
+                message: "Invalid username or password",
+                errorCode: "PASSWORD_IS_WRONG"
             }
         }
         logger.log("DEBUG", "AccountModel.create", "return data of findOne()", foundAccountByUsername, null, null);

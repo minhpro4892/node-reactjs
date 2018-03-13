@@ -75,9 +75,12 @@ module.exports = function (app) {
     app.post(api.login, function(req, res, next) {
         var userCtrl = new UserCtrl({});
         userCtrl.login(req.body).then(function (response) {
+            if (response && response.errorCode) {
+                res.send({ error: response, res: null });
+            }
             req.session.user = response;
             req.session.rememberMe = req.body.rememberMe;
-            res.session.create().then(function (error, token) {
+            res.session.save().then(function (error, token) {
                 if (error) return next(error);
                 res.send({ error: null, res: { token: token, user: response } });
             });
