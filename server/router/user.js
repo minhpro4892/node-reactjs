@@ -75,7 +75,12 @@ module.exports = function (app) {
     app.post(api.login, function(req, res, next) {
         var userCtrl = new UserCtrl({});
         userCtrl.login(req.body).then(function (response) {
-            res.send({ error: null, res: response });
+            req.session.user = response;
+            req.session.rememberMe = req.body.rememberMe;
+            res.session.create().then(function (error, token) {
+                if (error) return next(error);
+                res.send({ error: null, res: { token: token, user: response } });
+            });
         })
         .catch(function (error) {
             res.send({ error: error, res: null });
@@ -83,6 +88,13 @@ module.exports = function (app) {
     });
 
     app.post(api.logout, function (req, res, next) {
-        res.send({ res: {} });
+        if (req.session) {
+            req.session.destroy().then(function (error, response) {
+                if (error) return next(error);
+                res.send({ res: {} });
+            });
+        } else {
+            res.send({ res: {} });
+        }
     });
 }

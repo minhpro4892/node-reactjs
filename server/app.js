@@ -6,16 +6,18 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var joi = require("./middleware/validation/joi");
+var tracer = require("./middleware/tracer");
+var logger = require('./controller/logger');
 const app = express();
 
 // parse application/json
 app.use(bodyParser.json());
-app.use(joi);
 app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type, x-request-id'); // If needed
   res.setHeader('Access-Control-Allow-Credentials', true);
+  logger.log("INFO", "Request: ", req.url, null, null, req.requestId);
   next();
 })
 
@@ -38,4 +40,5 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 require('./router')(app);
+app.use(joi);
 module.exports = app;
