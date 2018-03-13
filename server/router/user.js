@@ -30,7 +30,7 @@ module.exports = function (app) {
         .catch(function(error) {
             res.send({ error: error, res: null })
         });
-    }, logMiddleware.save());
+    });
     
     app.post(api.update, function(req, res, next) {
         var userCtrl = new UserCtrl({});
@@ -40,7 +40,7 @@ module.exports = function (app) {
         .catch(function(error) {
             res.send({ error: error, res: null })
         });
-    }, logMiddleware.save());
+    });
 
     app.post(api.delete, function (req, res, next) {
         var userCtrl = new UserCtrl({});
@@ -80,9 +80,9 @@ module.exports = function (app) {
         .catch(function (error) {
             res.send({ error: error, res: null });
         })
-    }, logMiddleware.save());
+    });
 
     app.post(api.logout, function (req, res, next) {
         res.send({ res: {} });
-    }, logMiddleware.save());
+    });
 }

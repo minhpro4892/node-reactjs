@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 module.exports = {
     //------------------User------------------------//
-    "/api/user/create": Joi.object().key({
+    "/api/user/create": Joi.object().keys({
         username: Joi.string().alphanum().min(3).max(30).required(),
         phoneNumber: Joi.string().allow('', null).trim(),
         email: Joi.string().email().required(),
@@ -11,29 +11,29 @@ module.exports = {
         isActive: Joi.boolean().required(),
         address: Joi.string().allow('', null).trim()
     }),
-    "/api/user/find": Joi.object().key({
+    "/api/user/find": Joi.object().keys({
         limit: Joi.number().integer().min(5).max(50),
         page: Joi.number().integer().min(0)
     }),
-    "/api/user/update": Joi.object().key({
+    "/api/user/update": Joi.object().keys({
         userId: Joi.string().required(),
-        username: Joi.string.allow('', null).trim(),
+        username: Joi.string().allow('', null).trim(),
         phoneNumber: Joi.string().allow('', null).trim(),
         email: Joi.string().email(),
         roleName: Joi.boolean(),
         isActive: Joi.boolean()
     }),
-    "/api/user/delete": Joi.object().key({
+    "/api/user/delete": Joi.object().keys({
         userId: Joi.string().required()
     }),
-    "/api/user/resetPassword": Joi.object().key({
+    "/api/user/resetPassword": Joi.object().keys({
         userId: Joi.string().required()
     }),
-    "/api/user/changePassword": Joi.object().key({
+    "/api/user/changePassword": Joi.object().keys({
         oldPassword: Joi.string().required(),
         newPassword: Joi.string().required()
     }),
-    "/api/user/login": Joi.object().key({
+    "/api/user/login": Joi.object().keys({
         username: Joi.string().alphanum().min(3).max(30).required(),
         password: Joi.string().required(),
         rememberMe: Joi.boolean()

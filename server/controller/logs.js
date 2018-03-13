@@ -5,7 +5,6 @@ var Constants = require('../config/constants');
 var ErrorCode = require('./../config/errorCode');
 var LogsModel = require('../model/mongo/LogsModel');
 var logger = require('./logger');
-var inboxHelper = require('./libs/inbox.helper');
 var BaseCtrl = require('./base');
 
 function LogsCtrl(_params) {
