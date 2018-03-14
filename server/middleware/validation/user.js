@@ -3,7 +3,7 @@ const Joi = require('joi');
 module.exports = {
     //------------------User------------------------//
     "/api/user/create": Joi.object().keys({
-        username: Joi.string().alphanum().min(3).max(30).required(),
+        username: Joi.string().required().lowercase(),
         phoneNumber: Joi.string().allow('', null).trim(),
         email: Joi.string().email().required(),
         birthyear: Joi.number().integer().min(1900).max(2150),
@@ -34,7 +34,7 @@ module.exports = {
         newPassword: Joi.string().required()
     }),
     "/api/user/login": Joi.object().keys({
-        username: Joi.string().alphanum().min(3).max(30).required(),
+        username: Joi.string().required().lowercase(),
         password: Joi.string().required(),
         rememberMe: Joi.boolean()
     })

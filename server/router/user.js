@@ -80,7 +80,7 @@ module.exports = function (app) {
             }
             req.session.user = response;
             req.session.rememberMe = req.body.rememberMe;
-            res.session.save().then(function (error, token) {
+            req.session.create(function (error, token) {
                 if (error) return next(error);
                 res.send({ error: null, res: { token: token, user: response } });
             });

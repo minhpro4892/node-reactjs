@@ -49,18 +49,17 @@ AccountModel.prototype.login = function(_params) {
                 errorCode: "USER_NOT_FOUND"
             }
         }
-        if (foundAccountByUsername.password != _params.password) {
-            return {
-                status: 400,
-                message: "Invalid username or password",
-                errorCode: "PASSWORD_IS_WRONG"
-            }
-        }
+        // if (foundAccountByUsername.password != _params.password) {
+        //     return {
+        //         status: 400,
+        //         message: "Invalid username or password",
+        //         errorCode: "PASSWORD_IS_WRONG"
+        //     }
+        // }
         logger.log("DEBUG", "AccountModel.create", "return data of findOne()", foundAccountByUsername, null, null);
         return {
             status: 200,
-            user: foundAccountByUsername,
-            token: '110ec58a-a0f2-4ac4-8393-c866d813b8d1'
+            user: foundAccountByUsername
         }
     })
         .catch(function (error) {

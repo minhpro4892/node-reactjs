@@ -4,7 +4,7 @@
         "options": {
             "server": {
                 "socketOptions": {
-                "keepAlive": 1
+                    "keepAlive": 1
                 }
             },
             "auto_reconnect": true,
@@ -12,20 +12,26 @@
             "pass": ""
         }
     },
+    "redis": {
+        "server": "127.0.0.1",
+        "port": 6379,
+        "username": "",
+        "password": ""
+    },
     "logger": {
-      "debug": {
-        "name": "debug-file",
-        "level": "debug",
-        "datePattern": "yyyy-MM-dd",
-        "prepend": true,
-        "filename": "/qup/logs/.debug.log",
-        "maxsize": 2.5e+7,
-        "json": false,
-        "timestamp": true,
-        "handleExceptions": true,
-        "zippedArchive": true,
-        "maxDays": 30
-      },
-      "console": false
+        "debug": {
+            "name": "debug-file",
+            "level": "debug",
+            "datePattern": "yyyy-MM-dd",
+            "prepend": true,
+            "filename": "/LAPTRINH/logs/.debug.log",
+            "maxsize": 2.5e+7,
+            "json": false,
+            "timestamp": true,
+            "handleExceptions": true,
+            "zippedArchive": true,
+            "maxDays": 30
+        },
+        "console": false
     }
 }
