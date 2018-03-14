@@ -92,7 +92,7 @@ module.exports = function (app) {
 
     app.post(api.logout, function (req, res, next) {
         if (req.session) {
-            req.session.destroy().then(function (error, response) {
+            req.session.destroy(function (error, response) {
                 if (error) return next(error);
                 res.send({ res: {} });
             });

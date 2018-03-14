@@ -69,11 +69,10 @@ UserCtrl.prototype.resetPassword = function(params, tracer) {
 }
 
 UserCtrl.prototype.changePassword = function(params, tracer) {
-    var seft = this;
+    var self = this;
     var user = {};
-    user.oldPassword = crypto.createHash("md5").digest(params.oldPassword).digest();
-    user.newPassword = crypto.createHash("md5").digest(params.newPassword).digest();
-    user.retypePassword = crypto.createHash("md5").digest(params.retypePassword).digest();
+    user.oldPassword = crypto.createHash("md5").update(params.oldPassword).digest("hex");
+    user.newPassword = crypto.createHash("md5").update(params.newPassword).digest("hex");
     user._id = params._id;
     return self.accountModel.changePassword(user);
 }

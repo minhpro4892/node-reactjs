@@ -19,8 +19,7 @@ AccountModel.prototype.find = function (_params) {
         Account.find({})
         .sort(_params.sort || {username: 1})
         .limit(_params.limit || 10)
-        .skip(_params.skip || 0)
-        .select("username phoneNUmber"),
+        .skip(_params.skip || 0),
         Account.count()
     ])
         .spread(function (list, total) {
@@ -43,19 +42,19 @@ AccountModel.prototype.login = function(_params) {
     return Account.findOne({ username: _params.username })
     .then(function(foundAccountByUsername) {
         if (!foundAccountByUsername) {
-            return {
+            return Promise.reject({
                 status: 404,
                 message: "User not found",
                 errorCode: "USER_NOT_FOUND"
-            }
+            })
         }
-        // if (foundAccountByUsername.password != _params.password) {
-        //     return {
-        //         status: 400,
-        //         message: "Invalid username or password",
-        //         errorCode: "PASSWORD_IS_WRONG"
-        //     }
-        // }
+        if (foundAccountByUsername.password != _params.password) {
+            return Promise.reject({
+                status: 400,
+                message: "Invalid username or password",
+                errorCode: "PASSWORD_IS_WRONG"
+            })
+        }
         logger.log("DEBUG", "AccountModel.create", "return data of findOne()", foundAccountByUsername, null, null);
         return {
             status: 200,
@@ -80,18 +79,18 @@ AccountModel.prototype.update = function(_params) {
     ])
     .spread(function(foundAccountById, foundAccountByUsername) {
         if (!foundAccountById) {
-            return {
+            return Promise.reject({
                 status: 404,
                 message: "Username not found",
                 errorCode: "USERNAME_NOT_FOUND"
-            }
+            })
         }
         if (foundAccountByUsername) {
-            return {
+            return Promise.reject({
                 status: 400,
                 message: 'Username existed',
                 errorCode: 'USERNAME_EXISTED'
-            }
+            })
         }
         logger.log("DEBUG", "AccountModel.update", "return data of findOne()", foundAccountById, null, null);
         foundAccountById.set("username", _params.username);
@@ -108,11 +107,11 @@ AccountModel.prototype.delete = function (_params) {
     return AccountModel.findOne({ _id: _params._id })
     .then(function (foundAccountById) {
         if (!foundAccountById) {
-            return {
+            return Promise.reject({
                 status: 404,
                 message: "User not found",
                 errorCode: "USER_NOT_FOUND"
-            }
+            })
         }
         logger.log("DEBUG", "AccountModel.delete", "remove data one account", foundAccountById, null, null);
         return foundAccountById.remove();
@@ -124,14 +123,14 @@ AccountModel.prototype.delete = function (_params) {
 }
 
 AccountModel.prototype.resetPassword = function (_params) {
-    return AccountModel.findOne({ _id: _params._id })
+    return Account.findOne({ _id: _params.userId })
     .then(function (foundAccountById) {
         if (!foundAccountById) {
-            return {
+            return Promise.reject({
                 status: 404,
                 message: "User not found",
                 errorCode: "USER_NOT_FOUND"
-            }
+            })
         }
         return foundAccountById;
     })
@@ -143,41 +142,47 @@ AccountModel.prototype.resetPassword = function (_params) {
             text: user.password
         };
 
-        mailgun.messages().send(data, function (error, body) {
-            console.log(body);
-
+        return mailgun.messages().send(data, function (error, body) {
+            if (error) return error;
+            return {
+                status: 200,
+                message: "Password will be sent to your email"
+            }
         });
     })
 }
 
 AccountModel.prototype.changePassword = function(_params) {
-    return AccountModel.findOne({ _id: _params._id })
+    return Account.findOne({ _id: _params._id })
     .then(function(foundAccountById) {
         if(!foundAccountById) {
-            return {
+            return Promise.reject({
                 status: 404,
                 message: "User not found",
                 errorCode: "USER_NOT_FOUND"
-            }
+            })
         }
         if (foundAccountById._id != _params._id) {
-            return {
+            return Promise.reject({
                 status: 400,
                 message: "Password is incorrect",
                 errorCode: "WRONG_PASSWORD"
-            }
+            })
         }
-        if (_params.newPassword != _params.retypePassword) {
-            return {
-                status: 400,
-                message: "Password is incorrect",
-                errorCode: "WRONG_PASSWORD"
-            }
-        }
-
         foundAccountById.set("password", _params.newPassword);
-        foundAccountById.save();
-    }) 
+        foundAccountById.set("defaultPw", false);
+        return foundAccountById.save();
+    })
+    .then(function (data) {
+        return {
+            status: 200,
+            message: "Password have been successfully",
+            data: data
+        }
+    })
+    .catch(function (error) {
+        return error;
+    })
 }
 
 module.exports = AccountModel; 
