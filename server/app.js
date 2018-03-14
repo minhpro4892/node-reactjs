@@ -8,6 +8,7 @@ var session = require('express-session');
 var joi = require("./middleware/validation/joi");
 var tracer = require("./middleware/tracer");
 var logger = require('./controller/logger');
+var jwt_redis = require("./middleware/jwt-redis-session");
 const app = express();
 
 // parse application/json
@@ -40,5 +41,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 require('./router')(app);
+app.use(jwt_redis({
+  client: redisClient,
+  keyspace: constants['REDIS_KEY'].CC_SESSION_KEY,
+  secret: constants['SECURE']
+}));
 app.use(joi);
 module.exports = app;
