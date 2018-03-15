@@ -1,11 +1,14 @@
-var app = require('express')();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+module.exports = (io) => {
+    console.log('IO: ', io);
+    io.on('connection', function (socket) {
+        console.log('socket connected:' + socket);
+    });
 
-io.on('connection', function (socket) {
-    console.log('socket connected:' + socket);
-});
+    io.on('disconnect', function(socket) {
+        console.log('socket disconnected:' + socket);
+    });
 
-module.exports = {
-    io: io
+    io.on('reconnect_attempt', function(socket) {
+        console.log('reconnect attempted:' + socket);
+    });
 }

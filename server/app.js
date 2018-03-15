@@ -11,11 +11,12 @@ var logger = require('./controller/logger');
 var jwt_redis = require("./middleware/jwt-redis-session");
 var redisClient = require('./config/redis').redisClient;
 var constants = require('./config/constants');
-var socket = require('./config/socket');
 var tracer = require('./middleware/tracer');
 var fs = require('fs');
 require('./config/mongo').configMongoDb(mongoose);
 var  app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var router = express.Router();
 // parse application/json
 app.use(bodyParser.json());
@@ -43,8 +44,6 @@ app.use(jwt_redis({
 }));
 app.use(joi);
 app.use(router);
-
-app.use(socket.io);
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -63,4 +62,5 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 require('./router')(app);
+require('./config/socket')(io);
 module.exports = app;
