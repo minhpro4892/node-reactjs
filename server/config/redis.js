@@ -6,9 +6,9 @@ var redisConfig = {
     "username": "",
     "password": ""
 }
-var port = config.port;
-var server = config.server;
-var pw = config.password;
+var port = redisConfig.port;
+var server = redisConfig.server;
+var pw = redisConfig.password;
 
 var redisClient = redis.createClient(port, server);
 

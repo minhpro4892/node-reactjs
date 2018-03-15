@@ -11,6 +11,7 @@ var logger = require('./controller/logger');
 var jwt_redis = require("./middleware/jwt-redis-session");
 var redisClient = require('./config/redis').redisClient;
 var constants = require('./config/constants');
+var socket = require('./config/socket');
 var tracer = require('./middleware/tracer');
 var fs = require('fs');
 require('./config/mongo').configMongoDb(mongoose);
@@ -43,6 +44,7 @@ app.use(jwt_redis({
 app.use(joi);
 app.use(router);
 
+app.use(socket.io);
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
