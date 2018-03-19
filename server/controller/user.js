@@ -73,7 +73,7 @@ UserCtrl.prototype.changePassword = function(params, tracer) {
     var user = {};
     user.oldPassword = crypto.createHash("md5").update(params.oldPassword).digest("hex");
     user.newPassword = crypto.createHash("md5").update(params.newPassword).digest("hex");
-    user._id = params._id;
+    user._id = params.userId;
     return self.accountModel.changePassword(user);
 }
 

@@ -7,11 +7,8 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "react-node-api at port 9000",
-            "program": "${workspaceFolder}/server/index.js",
-            "env": {
-                "NODE_ENV": "dev"
-            }
+            "name": "Server API run in PORT 9000",
+            "program": "${workspaceFolder}\\server\\index.js"
         }
     ]
 }

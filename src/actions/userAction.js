@@ -1,14 +1,14 @@
-import { userConstants } from './../constants/user';;
+import { userConstants } from './../constants/user.js';
 import {
     userLoginApi,
     userLogoutApi
-} from '../constants/ApiConfigs'
+} from '../constants/ApiConfigs.js'
 import {
     callApi,
     saveUserToLocal,
     removeUserProfile,
     UrlBuilder
-} from "../utils/apiUtils";
+} from "../utils/apiUtils.js";
 
 
 function loginRequest(user) {

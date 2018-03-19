@@ -30,6 +30,7 @@ module.exports = {
         userId: Joi.string().required()
     }),
     "/api/user/changePassword": Joi.object().keys({
+        userId: Joi.string().required(),
         oldPassword: Joi.string().required(),
         newPassword: Joi.string().required()
     }),

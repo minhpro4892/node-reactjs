@@ -8,15 +8,15 @@ var env = process.env.NODE_ENV;
 
 module.exports = function (req, res, next) {
     var data = Object.assign({}, req.body || {}, req.query, req.params);
-    if (req.originalUrl != '/api/vehiclemodel/create'
-        && req.originalUrl != '/api/vehiclemake/create') {
+    if (req.route.path != '/api/vehiclemodel/create'
+        && req.route.path != '/api/vehiclemake/create') {
         logger.log("DEBUG", "Validation", "Request params", JSON.stringify(data), null, req.requestId);
     } else {
         logger.log("DEBUG", "Validation", "Request params", JSON.stringify(_.omit(data, ['image', 'models'])));
     }
 
-    if (schemas[req.originalUrl]) {
-        Joi.validate(data, schemas[req.originalUrl], {
+    if (schemas[req.route.path]) {
+        Joi.validate(data, schemas[req.route.path], {
             convert: true,
             stripUnknown: true
         }, function (err, convertedData) {
@@ -26,14 +26,14 @@ module.exports = function (req, res, next) {
                 }
                 next();
             } else {
-                logger.log("ERROR", "Validation", req.originalUrl, null, err, req.requestId);
+                logger.log("ERROR", "Validation", req.route.path, null, err, req.requestId);
                 var error = {
                     status: 400,
                     errorCode: ErrorCode.VALIDATION_ERROR,
                     message: "Validation error."
                 };
                 (env == 'dev' || env == 'lab-dev') && (error.devMessage = err.toString());
-                res.status(400).send(error);
+                res.send(400, error);
             }
         });
     } else {

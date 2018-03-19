@@ -162,7 +162,7 @@ AccountModel.prototype.changePassword = function(_params) {
                 errorCode: "USER_NOT_FOUND"
             })
         }
-        if (foundAccountById._id != _params._id) {
+        if (foundAccountById.password != _params.oldPassword) {
             return Promise.reject({
                 status: 400,
                 message: "Password is incorrect",

@@ -1,6 +1,5 @@
 import React, { Cmponent } from 'react';
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { login } from '../../actions/userAction';
@@ -87,7 +86,7 @@ class LoginPage extends React.Component {
                             <input type="checkbox" name="rememberMe" checked={this.state.rememberMe} value={this.state.rememberMe} onChange={this.handleRememberMe} />
                         </div>
                         <div className="form-group">
-                            <Link to="reset-password">Forgot Password</Link>
+                            <a href="/forgot-password"><label>Forgot Password</label></a>
                         </div>
                         <div className="form-group">
                             <button className="btn btn-primary">Login</button>
