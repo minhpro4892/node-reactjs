@@ -9,7 +9,7 @@ module.exports = function(req, res, next) {
     if (!permission) return next();
     var user = _.get(req, "session.user", null);
     if (user) {
-        return Account.findOne({ _id: user._id})
+        Account.findOne({ _id: user._id})
         .then(function(foundAccountById) {
             if (!foundAccountById) {
                 logger.log("Error", "Permission", "Account not found", null, "Denied", req.requestId)
@@ -19,7 +19,7 @@ module.exports = function(req, res, next) {
                     errorCode: 400003
                 });
             } else {
-                return next();
+                next();
             }
         })
     } else {
