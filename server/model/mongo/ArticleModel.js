@@ -15,7 +15,8 @@ ArticleModel.prototype.find = function (_params, tracer) {
         Article.find({})
             .sort(_params.sort)
             .limit(_params.limit || 10)
-            .skip(_params.skip || 0),
+            .skip(_params.skip || 0)
+            .populate('author'),
         Article.count()
     ])
         .spread(function (list, total) {
