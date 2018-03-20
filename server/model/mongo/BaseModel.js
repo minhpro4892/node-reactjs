@@ -9,6 +9,8 @@ function BaseModel(_params) {
             self[i] = _params[i];
         }
     }
+    self.name = self.constructor.name.slice(0, -"Model".length);
+    self.Model = self.Model || require(`./schema/${self.name}`);
 }
 util.inherits(BaseModel, EventEmitter);
 

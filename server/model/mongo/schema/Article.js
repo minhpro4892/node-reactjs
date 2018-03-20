@@ -1,6 +1,5 @@
+'use strict';
 var mongoose = require("mongoose");
-var Promise = require("bluebird");
-mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema({

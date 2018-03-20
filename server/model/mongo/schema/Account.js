@@ -1,9 +1,10 @@
+'use strict';
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 mongoose.Promise = Promise;
 var Schema = mongoose.Schema;
 
-var accountSchema = new Schema({
+var AccountSchema = new Schema({
     "username": {
         type: String,
         default: ''
@@ -68,10 +69,10 @@ var accountSchema = new Schema({
     }
 });
 
-accountSchema.pre('save', function(next) {
+AccountSchema.pre('save', function(next) {
     this.set('userId', this._id);
     this.set('fullName', `${this.firstName}${this.lastName}`);
     next();
 }) 
 
-module.exports = mongoose.model("Account", accountSchema);
+module.exports = mongoose.model("Account", AccountSchema);

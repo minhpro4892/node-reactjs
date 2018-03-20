@@ -29,7 +29,8 @@ ArticleModel.prototype.find = function (_params, tracer) {
 }
 
 ArticleModel.prototype.create = function (_params, tracer) {
-    return Article.save(_params);
+    var article = new Article(_params);
+    return article.save();
 }
 
 ArticleModel.prototype.findOne = function (_params, tracer) {

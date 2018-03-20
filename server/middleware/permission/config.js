@@ -66,4 +66,8 @@ module.exports = {
         action: "Actions"
       }
     },
+    "/api/article/find": false,
+    "/api/article/create": false,
+    "/api/article/update": false,
+    "/api/article/delete": false
 }

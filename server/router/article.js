@@ -10,8 +10,8 @@ var api = {
 
 module.exports = function (app) {
     app.post(api.find, function (req, res, next) {
-        var ArticleCtrl = new ArticleCtrl({});
-        ArticleCtrl.find(req.body).then(function (response) {
+        var articleCtrl = new ArticleCtrl({});
+        articleCtrl.find(req.body).then(function (response) {
             res.send({ error: null, res: response });
         })
             .catch(function (error) {
@@ -20,8 +20,8 @@ module.exports = function (app) {
     });
 
     app.post(api.create, function (req, res, next) {
-        var ArticleCtrl = new ArticleCtrl(req.body);
-        ArticleCtrl.create(req.body).then(function (response) {
+        var articleCtrl = new ArticleCtrl(req.body);
+        articleCtrl.create(req.body).then(function (response) {
             res.send({ error: null, res: response });
         })
             .catch(function (error) {
@@ -31,8 +31,8 @@ module.exports = function (app) {
 
 
     app.post(api.update, function (req, res, next) {
-        var ArticleCtrl = new ArticleCtrl(req.body);
-        ArticleCtrl.update(req.body).then(function (response) {
+        var articleCtrl = new ArticleCtrl(req.body);
+        articleCtrl.update(req.body).then(function (response) {
             res.send({ error: null, res: response });
         })
             .catch(function (error) {
@@ -42,8 +42,8 @@ module.exports = function (app) {
 
 
     app.post(api.delete, function (req, res, next) {
-        var ArticleCtrl = new ArticleCtrl(req.body);
-        ArticleCtrl.delete(req.body).then(function (response) {
+        var articleCtrl = new ArticleCtrl(req.body);
+        articleCtrl.delete(req.body).then(function (response) {
             res.send({ error: null, res: response });
         })
             .catch(function (error) {
