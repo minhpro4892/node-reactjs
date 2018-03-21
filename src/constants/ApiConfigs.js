@@ -1,4 +1,10 @@
 export const serverBase = window.ApiServer || 'http://localhost:9000';
 export const userLoginApi = serverBase + '/api/user/login';
+export const userFindApi = serverBase + '/api/user/find';
+export const userCreateApi = serverBase + '/api/user/create';
 export const userUpdateApi = serverBase + '/api/user/update';
 export const userLogoutApi = serverBase + '/api/user/logout';
+export const articleFindApi = serverBase + '/api/article/find';
+export const articleCreateApi = serverBase + '/api/article/create';
+export const articleUpdateApi = serverBase + '/api/article/update';
+export const articleDeleteApi = serverBase + '/api/article/delete';
