@@ -82,7 +82,7 @@ class LoginPage extends React.Component {
                             <label htmlFor="password">Password:</label>
                             <input type="password" className="form-control mr-l-20" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
                         </div>
-                        <div className="form-group mr-t-10">
+                        <div className="remember-box form-group mr-t-10">
                             <input type="checkbox" name="rememberMe" checked={this.state.rememberMe} value={this.state.rememberMe} onChange={this.handleRememberMe} />
                             <label><a href="/forgot-password"><label>Forgot Password</label></a></label>
                         </div>
