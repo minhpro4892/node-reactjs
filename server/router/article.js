@@ -1,4 +1,4 @@
-var ArticleCtrl = require('../controller/user');
+var ArticleCtrl = require('../controller/article');
 var _ = require('lodash');
 var logMiddleware = require('./../middleware/logs')
 var api = {
