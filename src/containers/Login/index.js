@@ -70,25 +70,23 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-            <div className={'login-body'} horizontal>
+            <div className='login-body' horizontal>
                 <div className="col-md-6 col-md-offset-3">
                     <h2>Login</h2>
                     <form name="form" onSubmit={this.handleSubmit}>
                         <div className='form-group'>
-                            <label htmlFor="username">Username</label>
-                            <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleUsernameChange} />                       
+                            <label htmlFor="username">Username:</label>
+                            <input type="text" className="form-control mr-l-20" name="username" value={this.state.username} onChange={this.handleUsernameChange} />                       
                         </div>
-                        <div className='form-group'>
-                            <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
+                        <div className='form-group mr-t-10'>
+                            <label htmlFor="password">Password:</label>
+                            <input type="password" className="form-control mr-l-20" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group mr-t-10">
                             <input type="checkbox" name="rememberMe" checked={this.state.rememberMe} value={this.state.rememberMe} onChange={this.handleRememberMe} />
+                            <label><a href="/forgot-password"><label>Forgot Password</label></a></label>
                         </div>
-                        <div className="form-group">
-                            <a href="/forgot-password"><label>Forgot Password</label></a>
-                        </div>
-                        <div className="form-group">
+                        <div className="form-group mr-t-20">
                             <button className="btn btn-primary">Login</button>
                         </div>
                     </form>

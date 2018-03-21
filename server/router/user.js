@@ -76,7 +76,7 @@ module.exports = function (app) {
         var userCtrl = new UserCtrl({});
         userCtrl.login(req.body).then(function (response) {
             if (response && response.errorCode) {
-                res.send({ error: response, res: null });
+                return res.send({ error: response, res: null });
             }
             req.session.user = response;
             req.session.rememberMe = req.body.rememberMe;

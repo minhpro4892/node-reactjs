@@ -49,7 +49,6 @@ class App extends Component {
   }
 
   logout() {
-    console.log('debug click logout');
     const { user } = this.props;
     this.props.logout(user);
   }
@@ -59,13 +58,12 @@ class App extends Component {
     return (
       <div className={classnames('App', className)} {...props}>
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button onClick={this.logout.bind(this)}>Logout</button>
+        <button onClick={this.logout()}>Logout</button>
       </div>
     );
   }

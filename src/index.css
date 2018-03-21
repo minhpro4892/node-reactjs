@@ -3,3 +3,30 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.mr-t-5 {
+  margin-top: 5px;
+}
+
+.mr-t-10 {
+  margin-top: 10px;
+}
+
+.mr-t-20 {
+  margin-top: 20px;
+}
+
+.mr-l-5 {
+  margin-left: 5px;
+}
+
+.mr-l-10 {
+  margin-left: 10px;
+}
+
+.mr-l-20 {
+  margin-left: 20px;
+}
+
+
+
