@@ -24,20 +24,20 @@ redisSetting.on('error', function (err) {
 redisSetting.on('ready', function (err) {
     console.log(new Date().toISOString() + ' redisSetting connection success - ' + err);
 });
-var redisBooking = redis.createClient(port, server);
-redisBooking.select(8);
+var redisArticle = redis.createClient(port, server);
+redisArticle.select(8);
 if (pw) {
-    redisBooking.auth(pw);
+    redisArticle.auth(pw);
 }
-redisBooking.on('error', function (err) {
-    console.log(new Date().toISOString() + ' redisBooking connection error to - ' + err);
+redisArticle.on('error', function (err) {
+    console.log(new Date().toISOString() + ' redisArticle connection error to - ' + err);
     process.exit(1);
 });
-redisBooking.on('ready', function (err) {
-    console.log(new Date().toISOString() + ' redisBooking connection success - ' + err);
+redisArticle.on('ready', function (err) {
+    console.log(new Date().toISOString() + ' redisArticle connection success - ' + err);
 });
 module.exports = {
     redisClient: redisClient,
     redisSetting: redisSetting,
-    redisBooking: redisBooking
+    redisArticle: redisArticle
 };

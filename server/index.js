@@ -1,7 +1,7 @@
 var restify = require('restify');
 var jwt_redis = require("./middleware/jwt-redis-session");
 var joi = require("./middleware/validation/joi");
-// var permission = require("./middleware/permission");
+var permission = require("./middleware/permission");
 var tracer = require("./middleware/tracer")
 var redisClient = require('./config/redis').redisClient;
 var constants = require('./config/constants');
@@ -60,7 +60,7 @@ server.use(jwt_redis({
     secret: constants['SECURE']
 }));
 server.use(joi);
-// !process.env.SKIP_PERMISSION && server.use(permission);
+!process.env.SKIP_PERMISSION && server.use(permission);
 
 require('./router')(server);
 require('./config/socket')(io);
