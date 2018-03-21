@@ -71,23 +71,33 @@ class LoginPage extends React.Component {
     render() {
         return (
             <div className='login-body' horizontal>
-                <div className="col-md-6 col-md-offset-3">
-                    <h2>Login</h2>
+                <div className="col-md-6 col-md-offset-3 form-login">
                     <form name="form" onSubmit={this.handleSubmit}>
                         <div className='form-group'>
                             <label htmlFor="username">Username:</label>
-                            <input type="text" className="form-control mr-l-20" name="username" value={this.state.username} onChange={this.handleUsernameChange} />                       
+                            <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.handleUsernameChange} />                       
                         </div>
                         <div className='form-group mr-t-10'>
                             <label htmlFor="password">Password:</label>
-                            <input type="password" className="form-control mr-l-20" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
+                            <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
                         </div>
-                        <div className="remember-box form-group mr-t-10">
-                            <input type="checkbox" name="rememberMe" checked={this.state.rememberMe} value={this.state.rememberMe} onChange={this.handleRememberMe} />
-                            <label><a href="/forgot-password"><label>Forgot Password</label></a></label>
+                        <div className="form-group">
+                            <div className="row  mr-t-10">
+                                <div className="col-md-6 col-sm-12">
+                                    <div className="form-group">
+                                        <input type="checkbox" name="rememberMe" checked={this.state.rememberMe} value={this.state.rememberMe} onChange={this.handleRememberMe} />
+                                        <label>Remember me</label>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 col-sm-12 text-right">
+                                    <div className="form-group">
+                                        <label><a href="/forgot-password"><label>Forgot Password</label></a></label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="form-group mr-t-20">
-                            <button className="btn btn-primary">Login</button>
+                            <button className="btn btn-primary">LOGIN</button>
                         </div>
                     </form>
                 </div>
