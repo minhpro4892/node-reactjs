@@ -10,10 +10,40 @@ class User extends Component {
         }
     }
 
+    renderDataList () {
+        return (
+            <tr>
+                <td>Joh.Doe</td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+                <td>01667288210</td>
+                <td>8 Quang trung</td>
+            </tr>
+        )
+    }
+
     render() {
         let { props } = this.props;
         return (
-            <p>User page</p>
+            <div className="content">
+                <div className="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {    this.renderDataList()
+                        }
+                    </tbody>
+                </div>
+            </div>
         );
     }
 }

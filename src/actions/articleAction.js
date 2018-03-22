@@ -9,7 +9,6 @@ import {
     callApi,
     UrlBuilder
 } from "../utils/apiUtils.js";
-import { optional } from './C:/Users/minh.nguyen/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/joi';
 
 function getArticle(options = {}) {
     options = Object.assign({}, options);

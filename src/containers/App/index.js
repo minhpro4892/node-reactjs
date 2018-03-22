@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/userAction';
+import * as commonAction from '../../actions/commonAction';
 import { socketAuth } from '../../utils/socketUtils.js';
 import PropTypes from 'prop-types'
 import logo from './logo.svg';
 import './style.css';
 import Header from '../../components/Header';
-import SideBar from '../../components/SideBar'
+import SideBar from '../../components/SideBar';
+
 
 class App extends Component {
   constructor() {
@@ -36,6 +38,8 @@ class App extends Component {
 
   initSystemData() {
     socketAuth('minh', this.socketAuthenticationCallback, this.socketDisconnectCallback, this.socketReconnectAttemptCallback);
+    this.props.commonAction.getUser();
+    this.props.commonAction.getArticle();
   }
 
   socketAuthenticationCallback(payload) {
@@ -102,6 +106,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => dispatch(logout()),
+    commonAction: () => dispatch(commonAction()),
   }
 }
 
