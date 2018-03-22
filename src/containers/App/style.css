@@ -3,6 +3,7 @@
   flex-flow: row wrap;
   font-weight: bold;
   text-align: center;
+  height: 100%;
 }
 
 .wrapper > * {
@@ -10,13 +11,10 @@
   flex: 1 100%;
 }
 
-.header {
-  background: tomato;
-}
-
 .main {
-  text-align: left;
-  background: deepskyblue;
+    height: 100%;
+    text-align: left;
+    background: deepskyblue;
 }
 
 .aside-1 {

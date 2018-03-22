@@ -1,7 +1,14 @@
 body {
   margin: 0;
   padding: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
   font-family: sans-serif;
+}
+
+#root {
+  height: 100%;
 }
 
 .mr-t-5 {

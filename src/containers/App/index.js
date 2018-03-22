@@ -7,12 +7,13 @@ import { socketAuth } from '../../utils/socketUtils.js';
 import PropTypes from 'prop-types'
 import logo from './logo.svg';
 import './style.css';
+import Header from '../../components/Header'
 
 class App extends Component {
   constructor() {
     super();
     this.state = {},
-    this.logout = this.logout.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.socketAuthenticationCallback = this.socketAuthenticationCallback.bind(this);
     this.socketDisconnectCallback = this.socketDisconnectCallback.bind(this);
     this.socketReconnectAttemptCallback = this.socketReconnectAttemptCallback.bind(this);
@@ -48,7 +49,7 @@ class App extends Component {
 
   }
 
-  logout() {
+  handleLogout() {
     const { user } = this.props;
     this.props.logout(user);
   }
@@ -57,12 +58,14 @@ class App extends Component {
     const { className, ...props } = this.props;
     return (
       <div className="wrapper">
-        <header className="header">Header</header>
+        <Header
+          logout={this.handleLogout}
+          title="Homepage"
+        />
         <article className="main">
           <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
         </article>
         <aside className="aside aside-1">Aside 1</aside>
-        <button onClick={this.logout()}>Logout</button>
       </div>
     );
   }

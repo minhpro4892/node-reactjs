@@ -24,7 +24,7 @@ store.dispatch(setLocale(localStorage.getItem('language') || 'en'));
 ReactDOM.render(
 	<Provider store={store}>
 		<Router history={history}>
-			<Route path='/login' component={Login} />
+			<Route path='/login' component={App} />
 			<Route path="/" component={App}>
 			</Route>
 			<Route path="/page-not-found" component={NotFound} />
