@@ -1,3 +1,29 @@
-.aside-1 {
-  background: gold;
+.sidebar-wrapper {
+  height: 100%;
+  overflow-y: auto;
+  background: rgba(51, 51, 51, 1);
+  transition: all 0.5s ease-in;
 }
+.sidebar-nav {
+  list-style: none;
+  height: 100%;
+  margin-left: -15px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav .menu-item {
+  min-height: 50px;
+  /* background: rgba(77, 77, 77, 0.6);
+  border-bottom: 1px solid #fff; */
+}
+
+.sidebar-nav li:active, .sidebar-nav li:hover {
+  background: rgba(77, 77, 77, 1);
+}
+
+.sidebar-nav li a {
+  color: #fff;
+}
+

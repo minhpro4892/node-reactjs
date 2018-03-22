@@ -12,19 +12,35 @@ class SideBar extends Component {
         }
     }
 
+    getMenu() {
+        var defaultMenu = [
+            { url: '/', title: "Dashboard" },
+            { url: '/users', title: "User" },
+            { url: '/articles', title: "Article"}
+        ]
+
+        var menuItems = defaultMenu.map((item) => {
+            return (
+                <li className={"menu-item active" ? "menu-item" : "menu-item active"}>
+                    <Link to={item.url}>{item.title}</Link>
+                </li>
+            )
+        })
+        return menuItems;
+    }
+
     render() {
         let { props } = this.props;
         return (
-            <div className="aside aside-1">
-                <ul>
-                    <li><Link to="/">Dashboard</Link></li>
-                    <li><Link to="/users">User</Link></li>
-                    <li><Link to="/articles">Article</Link></li>
+            <div className="aside sidebar-wrapper">
+                <ul className="sidebar-nav">
+                { this.getMenu() }
                 </ul>
             </div>
         );
     }
 }
+
 SideBar.contextTypes = {
     user: PropTypes.object
 }
