@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import PropTypes from 'prop-types'
 
-class Aricle extends Component {
+class User extends Component {
     constructor() {
         super();
         this.state = {
@@ -13,12 +13,12 @@ class Aricle extends Component {
     render() {
         let { props } = this.props;
         return (
-            <p>Article page</p>
+            <p>User page</p>
         );
     }
 }
-Aricle.contextTypes = {
+User.contextTypes = {
     user: PropTypes.object
 }
 
-export default Aricle;
+export default User;

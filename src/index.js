@@ -14,6 +14,9 @@ import { translations } from './constants/languages/languages'
 import App from './containers/App';
 import NotFound from './containers/NotFound'
 import Login from './containers/Login'
+import DashBoard from './containers/DashBoard'
+import User from './containers/User'
+import Article from './containers/Article'
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store)
@@ -26,6 +29,11 @@ ReactDOM.render(
 		<Router history={history}>
 			<Route path='/login' component={App} />
 			<Route path="/" component={App}>
+				<IndexRoute component={DashBoard} />
+				<Route path="/users" component={User}>
+				</Route>
+				<Route path="/articles" component={Article}>
+				</Route>
 			</Route>
 			<Route path="/page-not-found" component={NotFound} />
 			<Route path="*" component={NotFound} />

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import PropTypes from 'prop-types'
 
-class Aricle extends Component {
+class DashBoard extends Component {
     constructor() {
         super();
         this.state = {
@@ -13,12 +13,12 @@ class Aricle extends Component {
     render() {
         let { props } = this.props;
         return (
-            <p>Article page</p>
+            <p>DashBoard page</p>
         );
     }
 }
-Aricle.contextTypes = {
+DashBoard.contextTypes = {
     user: PropTypes.object
 }
 
-export default Aricle;
+export default DashBoard;

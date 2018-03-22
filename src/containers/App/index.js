@@ -7,7 +7,8 @@ import { socketAuth } from '../../utils/socketUtils.js';
 import PropTypes from 'prop-types'
 import logo from './logo.svg';
 import './style.css';
-import Header from '../../components/Header'
+import Header from '../../components/Header';
+import SideBar from '../../components/SideBar'
 
 class App extends Component {
   constructor() {
@@ -56,16 +57,17 @@ class App extends Component {
 
   render() {
     const { className, ...props } = this.props;
+    console.log(this.props.children)
     return (
       <div className="wrapper">
         <Header
           logout={this.handleLogout}
-          title="Homepage"
+          title="Demo App"
         />
+        <SideBar />
         <article className="main">
-          <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+          {this.props.children}
         </article>
-        <aside className="aside aside-1">Aside 1</aside>
       </div>
     );
   }

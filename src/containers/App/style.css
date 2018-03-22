@@ -17,10 +17,6 @@
     background: deepskyblue;
 }
 
-.aside-1 {
-  background: gold;
-}
-
 @media all and (min-width: 600px) {
   .aside { flex: 1 auto; }
 }
