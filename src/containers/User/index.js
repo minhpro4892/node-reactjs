@@ -24,6 +24,10 @@ class User extends Component {
 
     }
 
+    handleMenuClick(evenKey, data) {
+        
+    }
+
     renderDataList () {
         return (
             _.isArray(this.state.userList) && this.state.userList.length > 0 ?
@@ -40,9 +44,9 @@ class User extends Component {
                         <td scope="row">{item.roleName}</td>
                         <td scope="row">{item.isActive ? 'Active' : 'Inactive'}</td>
                         <td scope="row">{
-                            <DropdownButton eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-                                <MenuItem eventKey={3.1}>Edit</MenuItem>
-                                <MenuItem eventKey={3.2}>Delete</MenuItem>
+                            <DropdownButton title="Action" id="basic-nav-dropdown" onSelect={(evenKey) => this.handleMenuClick(evenKey, item)}>
+                                <MenuItem eventKey={1}>Edit</MenuItem>
+                                <MenuItem eventKey={2}>Delete</MenuItem>
                             </DropdownButton>
                         }</td>
                     </tr>
