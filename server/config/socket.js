@@ -1,5 +1,5 @@
 module.exports = (io) => {
-    console.log('IO: ', io);
+    console.log('IO: ');
     io.on('connection', function (socket) {
         console.log('socket connected:' + socket);
     });

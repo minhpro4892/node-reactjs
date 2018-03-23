@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { logout } from '../../actions/userAction';
-import * as commonAction from '../../actions/commonAction';
+import * as commonActions from '../../actions/commonAction';
 import { socketAuth } from '../../utils/socketUtils.js';
 import PropTypes from 'prop-types'
 import logo from './logo.svg';
@@ -29,17 +30,17 @@ class App extends Component {
     const path = this.props.location.pathname;
     // If this page is restricted, go to loginPage first.
     // (But pass on this page's path in order to redirect back upon login)
-    if (!user) {
-      router.push(`/login?redirect=${path}`);
-    } else {
+    // if (!user) {
+    //   router.push(`/login?redirect=${path}`);
+    // } else {
       this.initSystemData();
-    }
+    // }
   }
 
   initSystemData() {
     socketAuth('minh', this.socketAuthenticationCallback, this.socketDisconnectCallback, this.socketReconnectAttemptCallback);
-    this.props.commonAction.getUser();
-    this.props.commonAction.getArticle();
+    this.props.commonActions.getUser();;
+    this.props.commonActions.getArticle();
   }
 
   socketAuthenticationCallback(payload) {
@@ -61,7 +62,6 @@ class App extends Component {
 
   render() {
     const { className, ...props } = this.props;
-    console.log(this.props.children)
     return (
       <div className="wrapper">
         <Header
@@ -106,7 +106,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     logout: () => dispatch(logout()),
-    commonAction: () => dispatch(commonAction()),
+    commonActions: bindActionCreators(commonActions, dispatch),
   }
 }
 

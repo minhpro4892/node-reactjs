@@ -14,7 +14,6 @@
 .main {
     height: 100%;
     text-align: left;
-    background: deepskyblue;
 }
 
 @media all and (min-width: 600px) {
@@ -22,7 +21,7 @@
 }
 
 @media all and (min-width: 800px) {
-  .main    { flex: 3 0px; }
+  .main    { flex: 11 0px; }
   .aside-1 { order: 1; } 
-  .main    { order: 2; }
+  .main    { order: 10; }
 }

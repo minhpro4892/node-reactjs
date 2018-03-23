@@ -27,7 +27,6 @@ server.post('/session', function (req, res) {
         req.session.claims,
         req.session.jwt
     );
-
     res.json(req.session.toJSON());
 });
 /**

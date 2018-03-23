@@ -13,7 +13,7 @@ var api = {
 }
 
 module.exports = function (app) {
-    app.post(api.find, function (req, res, next) {
+    app.get(api.find, function (req, res, next) {
         var userCtrl = new UserCtrl({});
         userCtrl.find(req.body).then(function (response) {
             res.send({ error: null, res: response });
@@ -75,13 +75,9 @@ module.exports = function (app) {
     app.post(api.login, function(req, res, next) {
         var userCtrl = new UserCtrl({});
         userCtrl.login(req.body).then(function (response) {
-            if (response && response.errorCode) {
-                return res.send({ error: response, res: null });
-            }
             req.session.user = response;
             req.session.rememberMe = req.body.rememberMe;
             req.session.create(function (error, token) {
-                if (error) return next(error);
                 res.send({ error: null, res: { token: token, user: response } });
             });
         })
