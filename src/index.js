@@ -17,6 +17,8 @@ import Login from './containers/Login'
 import DashBoard from './containers/DashBoard'
 import User from './containers/User'
 import Article from './containers/Article'
+import jquery from "jquery";
+window.$ = window.jQuery = jquery;
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store)

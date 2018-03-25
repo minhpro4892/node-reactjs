@@ -1,7 +1,7 @@
 var permissionConfig = require('./config');
 var logger = require('./../../controller/logger');
 var errorCode = require('./../../config/errorCode');
-var Account = require('./../../model/mongo/AccountModel');
+var Account = require('./../../model/mongo/schema/Account');
 var _ = require('lodash');
 
 module.exports = function(req, res, next) {

@@ -23,6 +23,10 @@ body {
   margin-top: 20px;
 }
 
+.mr-t-50 {
+  margin-top: 50px;
+}
+
 .mr-l-5 {
   margin-left: 5px;
 }
@@ -33,6 +37,10 @@ body {
 
 .mr-l-20 {
   margin-left: 20px;
+}
+
+.mr-b-20 {
+  margin-bottom: 20px;
 }
 
 .content {

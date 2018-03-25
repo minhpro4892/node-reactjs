@@ -18,6 +18,11 @@ UserCtrl.prototype.find = function (params, tracer) {
     return  self.accountModel.find(params);   
 }
 
+UserCtrl.prototype.findOne = function(params, tracer) {
+    var self = this;
+    return self.accountModel.findOne(params);
+}
+
 UserCtrl.prototype.login = function (params, tracer) {
     var self = this;
     var user = _.pick(params, ["username"]);

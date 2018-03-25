@@ -1,7 +1,8 @@
 import { userConstants } from './../constants/user.js';
 import {
     userLoginApi,
-    userLogoutApi
+    userLogoutApi,
+    userFindOneApi
 } from '../constants/ApiConfigs.js'
 import {
     callApi,
@@ -19,7 +20,7 @@ function loginRequest(user) {
 }
 
 function loginSuccess(payload) {
-    saveUserToLocal(payload.res.user);
+    saveUserToLocal(payload.res);
     return {
         type: userConstants.LOGIN_SUCCESS,
         user: payload.res.user,
@@ -88,4 +89,18 @@ export function logout(user) {
         logoutSuccess,
         logoutFailure
     );
+}
+
+export function getOneUser(options={}) {
+    options = Object.assign({}, options);
+    const config = {
+        method: "get"
+    }
+    return callApi(
+        UrlBuilder(userFindOneApi, options),
+        config,
+        null,
+        null,
+        false
+    )
 }

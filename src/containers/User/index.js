@@ -4,14 +4,17 @@ import './style.css';
 import PropTypes from 'prop-types';
 import _ from "lodash";
 import moment from 'moment';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { getOneUser } from '../../actions/userAction';
 
 class User extends Component {
     constructor() {
         super();
         this.state = {
-            userList: []
+            userList: [],
+            detailItem: {}
         }
+        this.handleMenuClick = this.handleMenuClick.bind(this);
     }
 
     componentDidMount() {
@@ -25,7 +28,18 @@ class User extends Component {
     }
 
     handleMenuClick(evenKey, data) {
-        
+        switch(evenKey) {
+            case 'Edit': {
+                this.props.getOneUser({ userId: data._id })
+                .then(function(data) {
+                    if (data.ok) {
+                        this.setState({ detailItem: data.res });
+                    }
+                })
+                break;
+            }
+
+        }
     }
 
     renderDataList () {
@@ -44,10 +58,7 @@ class User extends Component {
                         <td scope="row">{item.roleName}</td>
                         <td scope="row">{item.isActive ? 'Active' : 'Inactive'}</td>
                         <td scope="row">{
-                            <DropdownButton title="Action" id="basic-nav-dropdown" onSelect={(evenKey) => this.handleMenuClick(evenKey, item)}>
-                                <MenuItem eventKey={1}>Edit</MenuItem>
-                                <MenuItem eventKey={2}>Delete</MenuItem>
-                            </DropdownButton>
+                            <Button bsStyle="primary" onClick={this.handleMenuClick("Edit", item)}>Edit</Button>
                         }</td>
                     </tr>
                 )
@@ -97,7 +108,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {}
+    return {
+        getOneUser: (options) => dispatch(getOneUser(options)),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

@@ -24,7 +24,7 @@ function getUserRequest() {
 function getUserSuccess(data) {
     return {
         type: GET_USER_SUCCESS,
-        data: data.res.list
+        data: data.res && data.res.list || []
     };
 }
 
@@ -59,7 +59,7 @@ function getArticleRequest() {
 function getArticleSuccess(data) {
     return {
         type: GET_ARTICLE_SUCCESS,
-        data: data.res.list
+        data: data.res && data.res.list || []
     };
 }
 

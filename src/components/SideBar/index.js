@@ -32,7 +32,7 @@ class SideBar extends Component {
     render() {
         let { props } = this.props;
         return (
-            <div className="aside sidebar-wrapper">
+            <div className="aside sidebar-wrapper mr-t-50">
                 <ul className="sidebar-nav">
                 { this.getMenu() }
                 </ul>

@@ -3,14 +3,15 @@ import {
     articleFindApi,
     articleCreateApi,
     articleUpdateApi,
-    articleDeleteApi
+    articleDeleteApi,
+    articleFindOneApi
 } from '../constants/ApiConfigs.js'
 import {
     callApi,
     UrlBuilder
 } from "../utils/apiUtils.js";
 
-function getArticle(options = {}) {
+export function getArticle(options = {}) {
     options = Object.assign({}, options);
     const config = {
         method: "post",
@@ -25,7 +26,7 @@ function getArticle(options = {}) {
     );
 }
 
-function createArticle(options = {}) {
+export function createArticle(options = {}) {
     options = Object.assign({}, options);
     const config = {
         method: "post",
@@ -40,7 +41,7 @@ function createArticle(options = {}) {
     );
 }
 
-function updateArticle(options = {}) {
+export function updateArticle(options = {}) {
     options = Object.assign({}, options);
     const config = {
         method: "post",
@@ -69,24 +70,16 @@ function deleteArticle(options = {}) {
     );
 }
 
-function findOneArticle(options = {}) {
+export function getOneArticle(options = {}) {
     options = Object.assign({}, options);
     const config = {
         method: "get"
     }
     return callApi(
-        UrlBuilder(articleFindApi, options),
+        UrlBuilder(articleFindOneApi, options),
         config,
         null,
         null,
         null
     );
-}
-
-export default {
-    getArticle,
-    findOneArticle,
-    createArticle,
-    updateArticle,
-    deleteArticle
 }

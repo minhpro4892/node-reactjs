@@ -30,11 +30,11 @@ class App extends Component {
     const path = this.props.location.pathname;
     // If this page is restricted, go to loginPage first.
     // (But pass on this page's path in order to redirect back upon login)
-    // if (!user) {
-    //   router.push(`/login?redirect=${path}`);
-    // } else {
+    if (!user) {
+      router.push(`/login?redirect=${path}`);
+    } else {
       this.initSystemData();
-    // }
+    }
   }
 
   initSystemData() {
@@ -69,7 +69,7 @@ class App extends Component {
           title="Demo App"
         />
         <SideBar />
-        <article className="main">
+        <article className="main mr-t-50">
           {this.props.children}
         </article>
       </div>

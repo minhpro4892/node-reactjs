@@ -6,12 +6,23 @@ var api = {
     "create": "/api/article/create",
     "update": "/api/article/update",
     "delete": "/api/article/delete",
+    "findOne": "/api/article/findOne"
 }
 
 module.exports = function (app) {
     app.get(api.find, function (req, res, next) {
         var articleCtrl = new ArticleCtrl({});
         articleCtrl.find(req.body).then(function (response) {
+            res.send({ error: null, res: response });
+        })
+            .catch(function (error) {
+                res.send({ error: error, res: null })
+            });
+    });
+    
+    app.get(api.findOne, function (req, res, next) {
+        var articleCtrl = new ArticleCtrl({});
+        articleCtrl.findOne(req.query).then(function (response) {
             res.send({ error: null, res: response });
         })
             .catch(function (error) {

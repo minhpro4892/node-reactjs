@@ -10,9 +10,19 @@ var api = {
     "changePassword": "/api/user/changePassword",
     "login": "/api/user/login",
     "logout": "/api/user/logout",
+    "findOne": "/api/user/findOne"
 }
 
 module.exports = function (app) {
+    app.get(api.findOne, function (req, res, next) {
+        var userCtrl = new UserCtrl();
+        userCtrl.findOne(req.query).then(function (response) {
+            res.send({ error: null, res: response });
+        })
+        .catch(function(error) {
+            res.send({ error: error, res: null });
+        });
+    });
     app.get(api.find, function (req, res, next) {
         var userCtrl = new UserCtrl({});
         userCtrl.find(req.body).then(function (response) {

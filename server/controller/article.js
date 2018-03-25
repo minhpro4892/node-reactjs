@@ -16,6 +16,11 @@ ArticleCtrl.prototype.find = function (params, tracer) {
     return self.articleModel.find(params, tracer);   
 }
 
+ArticleCtrl.prototype.findOne = function (params, tracer) {
+    var self = this;
+    return self.articleModel.findOne(params, tracer);   
+}
+
 ArticleCtrl.prototype.create = function (params, tracer) {
     var self = this;
     return self.articleModel.create(params, tracer);

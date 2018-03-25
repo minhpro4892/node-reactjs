@@ -33,6 +33,23 @@ AccountModel.prototype.find = function (_params) {
         })
 }
 
+AccountModel.prototype.findOne = function(_params) {
+    return Account.findOne({ _id: _params.userId })
+    .then(function(foundAccountById) {
+        if (!foundAccountById) {
+            return Promise.reject({
+                status: 404,
+                message: "User not found",
+                errorCode: "USER_NOT_FOUND"
+            })
+        }
+        return foundAccountById;
+    })
+    .catch(function(error) {
+        return error;
+    });
+}
+
 AccountModel.prototype.save = function(_params) {
     var account = new Account(_params);
     return account.save();
@@ -56,10 +73,7 @@ AccountModel.prototype.login = function(_params) {
         //     })
         // }
         logger.log("DEBUG", "AccountModel.create", "return data of findOne()", foundAccountByUsername, null, null);
-        return {
-            status: 200,
-            user: foundAccountByUsername
-        }
+        return foundAccountByUsername;
     })
         .catch(function (error) {
             logger.log("ERROR", "AccountModel.find", "error", null, error, null);
