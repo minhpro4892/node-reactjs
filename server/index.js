@@ -63,6 +63,6 @@ server.use(joi);
 
 require('./router')(server);
 require('./config/socket')(io);
-server.listen(process.argv[2] || process.env.CCLITE_PORT || 9000, "0.0.0.0", function () {
+server.listen(process.argv[2] || process.env.PORT || 9000, "0.0.0.0", function () {
     console.log('%s listening at %s', server.name, server.url);
 });

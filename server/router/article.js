@@ -32,9 +32,10 @@ module.exports = function (app) {
             });
     });
 
-    app.body(api.export, function (req, res, next) {
+    app.post(api.export, function (req, res, next) {
         var articleCtrl = new ArticleCtrl(req.body);
         articleCtrl.export(req.body).then(function (response) {
+            console.log('debug exportToCSV'+JSON.stringify(response));
             var filestream = fs.createReadStream(response);
             res.setHeader('Content-Type', 'application/vnd.openxmlformates');
             res.setHeader("Content-Disposition", "attachment;filename=" + "articles.csv");

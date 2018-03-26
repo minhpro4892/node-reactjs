@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Server API run in PORT 8000",
+            "name": "Server API run in PORT 9000",
             "program": "${workspaceFolder}\\server\\index.js",
             "env": {
                 "NODE_ENV": "dev",

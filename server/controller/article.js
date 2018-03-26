@@ -3,6 +3,7 @@ var _ = require('lodash');
 var Promise = require('bluebird');
 var util = require('util');
 var ArticleModel = require("../model/mongo/ArticleModel");
+var exportFile = require("./exportFile");
 
 function ArticleCtrl(params) {
     params = params || {};
@@ -24,17 +25,17 @@ ArticleCtrl.prototype.findOne = function (params, tracer) {
 ArticleCtrl.prototype.export = function (params, tracer) {
     var self = this;
     var query = {};
-    if (params.query.startDate) {
+    if (params.query && params.query.startDate) {
         query.createdDate = query.createdDate || {};
         query.createdDate.$gte = params.query.startDate;
     }
 
-    if (params.query.endDate) {
+    if (params.query && params.query.endDate) {
         query.createdDate = query.createdDate || {};
         query.createdDate.$lte = params.query.endDate;
     }
 
-    if (params.query.str) {
+    if (params.query && params.query.str) {
         var searchString = params.query.str.trim();
         searchString = searchString.replace(/\++/, "");
         var regexOption = { $regex: searchString, $options: "i" };
@@ -45,9 +46,14 @@ ArticleCtrl.prototype.export = function (params, tracer) {
     }
 
     return exportFile.exportToCSV({
+        sheetName: "Article",
+        columns: [
+            { header: 'Title', key: 'title', width: 20},
+            { header: 'content', key: "content", width: 17}
+        ],
         model: "Article",
         query: query
-    });
+    }, tracer);
 }
 
 ArticleCtrl.prototype.create = function (params, tracer) {

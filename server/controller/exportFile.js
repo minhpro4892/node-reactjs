@@ -7,7 +7,7 @@ var tempfile = require('tempfile');
 var moment = require('moment');
 var fs = require('fs');
 
-module.exports = function exportToCSV(params, tracer) {
+function exportToCSV(params, tracer) {
     return new Promise(function (resolved, reject) {
         try {
             var tempFilePath = params.path || tempfile('.xlsx');
@@ -59,6 +59,7 @@ module.exports = function exportToCSV(params, tracer) {
                 workbook.commit()
                     .then(function () {
                         console.log('end write stream: %s %s', new Date().toISOString(), tracer);
+                        console.log(tempFilePath);
                         // the stream has been written
                         resolved(tempFilePath);
                     });
@@ -89,4 +90,8 @@ var parseValue = {
         row.getCell(1).value = doc.fullName;
         row.getCell(2).value = doc.phone;
     }
+}
+
+module.exports = {
+    exportToCSV: exportToCSV
 }
