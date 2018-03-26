@@ -48,6 +48,14 @@ class Article extends Component {
                 this.setState({ showDiaLog: true, detailItem: {} });
                 break;
             }
+            case 'Export': {
+                self.props.articleActions.exportArticleToCSV().then((data) => {
+                    if (data.ok) {
+                        console.log('Get CSV file');
+                    }
+                })
+                break;
+            }
         }
     }
     
@@ -75,6 +83,7 @@ class Article extends Component {
             <div className="content">
                 <ButtonToolbar className="button-layout mr-b-20">
                     <Button bsStyle="success" onClick={(e) => this.handleMenuClick("Add", e)}>Add</Button>
+                    <Button bsStyle="default" onClick={(e) => this.handleMenuClick("Export", e)}>Export to CSV</Button>
                 </ButtonToolbar>
                 <div className="table table-bordered fill-height">
                     <thead>

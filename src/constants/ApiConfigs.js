@@ -9,4 +9,5 @@ export const articleFindApi = serverBase + '/api/article/find';
 export const articleCreateApi = serverBase + '/api/article/create';
 export const articleUpdateApi = serverBase + '/api/article/update';
 export const articleDeleteApi = serverBase + '/api/article/delete';
-export const articleFindOneApi = serverBase + '/api/article/findOne'
+export const articleFindOneApi = serverBase + '/api/article/findOne';
+export const articleExportApi = serverBase + '/api/article/export';

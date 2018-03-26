@@ -21,6 +21,35 @@ ArticleCtrl.prototype.findOne = function (params, tracer) {
     return self.articleModel.findOne(params, tracer);   
 }
 
+ArticleCtrl.prototype.export = function (params, tracer) {
+    var self = this;
+    var query = {};
+    if (params.query.startDate) {
+        query.createdDate = query.createdDate || {};
+        query.createdDate.$gte = params.query.startDate;
+    }
+
+    if (params.query.endDate) {
+        query.createdDate = query.createdDate || {};
+        query.createdDate.$lte = params.query.endDate;
+    }
+
+    if (params.query.str) {
+        var searchString = params.query.str.trim();
+        searchString = searchString.replace(/\++/, "");
+        var regexOption = { $regex: searchString, $options: "i" };
+        query.$or = [
+            { title: regexOption },
+            { content: regexOption }
+        ]
+    }
+
+    return exportFile.exportToCSV({
+        model: "Article",
+        query: query
+    });
+}
+
 ArticleCtrl.prototype.create = function (params, tracer) {
     var self = this;
     return self.articleModel.create(params, tracer);

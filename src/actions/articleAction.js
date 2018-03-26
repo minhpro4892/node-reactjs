@@ -4,7 +4,8 @@ import {
     articleCreateApi,
     articleUpdateApi,
     articleDeleteApi,
-    articleFindOneApi
+    articleFindOneApi,
+    articleExportApi
 } from '../constants/ApiConfigs.js'
 import {
     callApi,
@@ -22,7 +23,7 @@ export function getArticle(options = {}) {
         config,
         null,
         null,
-        null
+        false
     );
 }
 
@@ -37,7 +38,7 @@ export function createArticle(options = {}) {
         config,
         null,
         null,
-        null
+        false
     );
 }
 
@@ -52,7 +53,7 @@ export function updateArticle(options = {}) {
         config,
         null,
         null,
-        null
+        false
     );
 }
 function deleteArticle(options = {}) {
@@ -66,7 +67,7 @@ function deleteArticle(options = {}) {
         config,
         null,
         null,
-        null
+        false
     );
 }
 
@@ -80,6 +81,24 @@ export function getOneArticle(options = {}) {
         config,
         null,
         null,
-        null
+        false
     );
+}
+
+export function exportArticleToCSV(options = {}) {
+    options = Object.assign({}, options);
+    const config = {
+        credentials: "same-origin",
+        headers: {"Content-Type": "application/json"},
+        method: "post",
+        body: JSON.stringify(options),
+        fileName: "Article.csv"
+    }
+    return callApi (
+        articleExportApi,
+        config,
+        null,
+        null,
+        false
+    )
 }
