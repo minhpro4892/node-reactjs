@@ -6,6 +6,7 @@ import _ from "lodash";
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import * as articleActions from '../../actions/articleAction';
+import { socketAuth } from '../../utils/socketUtils.js';
 import AddEdit from './AddEdit';
 
 class Article extends Component {
@@ -17,10 +18,25 @@ class Article extends Component {
             showDiaLog: false
         }
         this.closeDialog = this.closeDialog.bind(this);
+        this.socketAuthenticationCallback = this.socketAuthenticationCallback.bind(this);
+        this.socketDisconnectCallback = this.socketDisconnectCallback.bind(this);
+        this.socketReconnectAttemptCallback = this.socketReconnectAttemptCallback.bind(this);
     }
 
     componentDidMount() {
+        socketAuth(this.props.user.username, this.socketAuthenticationCallback, this.socketDisconnectCallback, this.socketReconnectAttemptCallback);
+    }
 
+    socketAuthenticationCallback(payload) {
+  
+    }
+  
+    socketDisconnectCallback(payload) {
+  
+    }
+  
+    socketReconnectAttemptCallback(payload) {
+  
     }
 
     componentWillReceiveProps(nextProps) {
@@ -105,8 +121,9 @@ class Article extends Component {
 }
 
 function mapStateToProps(state) {
-    const { commonData } = state;
+    const { commonData, auth } = state;
     return {
+        user: auth.user,
         articleList: commonData.articleList
     }
 }
