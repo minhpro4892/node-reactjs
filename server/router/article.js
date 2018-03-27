@@ -35,11 +35,15 @@ module.exports = function (app) {
     app.post(api.export, function (req, res, next) {
         var articleCtrl = new ArticleCtrl(req.body);
         articleCtrl.export(req.body).then(function (response) {
-            console.log('debug exportToCSV'+JSON.stringify(response));
+            console.log('debug exportToCSV' + JSON.stringify(response));
             var filestream = fs.createReadStream(response);
-            res.setHeader('Content-Type', 'application/vnd.openxmlformates');
-            res.setHeader("Content-Disposition", "attachment;filename=" + "articles.csv");
+            var file = fs.readFileSync(response, 'binary');
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader("Content-Disposition", "attachment;filename=" + "Article.xlsx");
+            console.log('debug filestream' + JSON.stringify(res));
+            // res.write(file);
             filestream.pipe(res);
+            // res.end();
         })
             .catch(function (error) {
                 res.send({ error: error, res: null })

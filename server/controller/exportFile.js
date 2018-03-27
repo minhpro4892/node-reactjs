@@ -27,10 +27,10 @@ function exportToCSV(params, tracer) {
                     firstSheet: 0, activeTab: 1, visibility: 'visible'
                 }
             ];
-            workbook.addWorksheet(params.sheetName || 'Articles', { properties: { tabColor: { argb: 'FFC0000' } } });
-            var worksheet = workbook.getWorksheet(params.sheetName || 'Articles');
+            workbook.addWorksheet(params.sheetName || 'Article', { properties: { tabColor: { argb: 'FFC0000' } } });
+            var worksheet = workbook.getWorksheet(params.sheetName || 'Article');
             worksheet.columns = params.columns;
-            var stream = mongoose.model(params.model || 'Article').find(params.query || {}, params.select || {}).sort(params.sort || {}).stream();
+            var stream = mongoose.model(params.model || 'Article').find(params.query || {}).sort(params.sort || {}).stream();
             var i = 1;
             var headerRow = worksheet.getRow(1)
             worksheet.columns.forEach(function (column, index) {
@@ -46,9 +46,27 @@ function exportToCSV(params, tracer) {
 
             console.log('start write stream: %s %s', new Date().toISOString(), tracer);
             stream.on('data', function (doc) {
+                console.log(doc);
                 try {
                     var row = worksheet.getRow(++i);
-                    parseValue[params.module](doc, row, i, params.options);
+                    var alignment = {
+                        vertical: 'middle',
+                        horizontal: 'center'
+                    };
+
+                    var background = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: { argb: i % 2 ? 'e3e3e3' : 'ffffff' }
+                    };
+                    row.alignment = { vertical: 'middle' };
+                    _.range(2).forEach(function (index) {
+                        row.getCell(index + 1).fill = background;
+                    })
+
+                    row.getCell(1).value = doc.title;
+                    row.getCell(2).value = doc.phone;
+                    // parseValue[params.module](doc, row, i, params.options);
                     row.commit();
                 } catch (error) {
                     reject(error);
@@ -59,7 +77,6 @@ function exportToCSV(params, tracer) {
                 workbook.commit()
                     .then(function () {
                         console.log('end write stream: %s %s', new Date().toISOString(), tracer);
-                        console.log(tempFilePath);
                         // the stream has been written
                         resolved(tempFilePath);
                     });

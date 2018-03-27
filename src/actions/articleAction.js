@@ -92,7 +92,7 @@ export function exportArticleToCSV(options = {}) {
         headers: {"Content-Type": "application/json"},
         method: "post",
         body: JSON.stringify(options),
-        fileName: "Article.csv"
+        fileName: "Article.xlsx"
     }
     return callApi (
         articleExportApi,

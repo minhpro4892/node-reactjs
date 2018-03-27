@@ -53,7 +53,13 @@ ArticleCtrl.prototype.export = function (params, tracer) {
         ],
         model: "Article",
         query: query
-    }, tracer);
+    }, tracer)
+        .then(function (response) {
+      return response;  
+    })
+    .catch(function (error) {
+        return error;
+    });
 }
 
 ArticleCtrl.prototype.create = function (params, tracer) {
