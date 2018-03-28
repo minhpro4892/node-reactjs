@@ -8,7 +8,6 @@ export const socketApi = {
         if (!socket) {
             socket = io(socketConfig.socketServer);
             socket.on("connect", ()=>{
-                const user = loadUserProfile();
                 socket.emit(socketConfig.send.login, {
                     username: "", token: ""
                 });
@@ -50,7 +49,6 @@ export function socketAuth(username, connectedCallback, disconnectCallback, reco
             //     console.log(data.message);
             // });
             // socket.emit("greeting", {message: "Hi all people"});
-            const user = loadUserProfile();
             socket.emit(socketConfig.send.login, { username: username, token: user.token });
         });
         

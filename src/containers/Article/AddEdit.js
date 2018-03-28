@@ -6,6 +6,8 @@ import _ from "lodash";
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import * as articleActions from '../../actions/articleAction';
+import { socketApi } from '../../utils/socketUtils.js';
+import { socketConfig } from '../../constants/socketConfigs';
 
 class AddEdit extends Component {
     constructor() {
@@ -33,12 +35,14 @@ class AddEdit extends Component {
         }
         if (this.state.detailItem._id) {
             body.articleId = this.state.detailItem._id;
+            socketApi.emit(socketConfig.send.article.updateArticle, body);
             this.props.articleActions.updateArticle(body).then(data => {
                 console.log(data);
                 // this.updateArticleList();
             });
         } else {
             body.userId = this.props.user._id;
+            socketApi.emit(socketConfig.send.article.addArticle, body);
             this.props.articleActions.createArticle(body).then(data => {
                 console.log(data);
             })
@@ -93,9 +97,10 @@ class AddEdit extends Component {
 }
 
 function mapStateToProps(state) {
-    const { auth } = state;
+    const { auth, socket } = state;
     return {
-        user: auth.user
+        user: auth.user,
+        socket: socket
     }
 }
 

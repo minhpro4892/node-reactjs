@@ -5,9 +5,11 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
+import * as socketActions from '../../actions/socketActions';
 import * as articleActions from '../../actions/articleAction';
-import { socketAuth } from '../../utils/socketUtils.js';
+import { socketApi, socketAuth } from '../../utils/socketUtils.js';
 import AddEdit from './AddEdit';
+import { socketConfig } from '../../constants/socketConfigs';
 
 class Article extends Component {
     constructor() {
@@ -28,15 +30,30 @@ class Article extends Component {
     }
 
     socketAuthenticationCallback(payload) {
-  
+        if (payload.res && payload.res.username) {
+            this.props.socketActions.socketAuthenticated(payload.res.username);
+        }
+        socketApi.on(socketConfig.receive.article.addArticle, function (data) {
+            console.log('Add article successfully');
+            
+        });
+        socketApi.on(socketConfig.receive.article.updateArticle, function (data) {
+            
+        });
+        socketApi.on(socketConfig.receive.article.deleteArticle, function (data) {
+            
+        });
     }
   
     socketDisconnectCallback(payload) {
-  
+        this.props.socketActions.socketDisconnected();
+        socketApi.remove(socketConfig.receive.article.addArticle);
+        socketApi.remove(socketConfig.receive.article.updateArticle);
+        socketApi.remove(socketConfig.receive.article.deleteArticle);
     }
   
     socketReconnectAttemptCallback(payload) {
-  
+        this.props.socketActions.socketReconnectAttempt();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -121,16 +138,18 @@ class Article extends Component {
 }
 
 function mapStateToProps(state) {
-    const { commonData, auth } = state;
+    const { commonData, auth, socket } = state;
     return {
         user: auth.user,
-        articleList: commonData.articleList
+        articleList: commonData.articleList,
+        socket: socket
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         articleActions:  bindActionCreators(articleActions, dispatch),
+        socketActions: bindActionCreators(socketActions, dispatch)
     }
 }
 
