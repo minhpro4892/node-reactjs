@@ -1,4 +1,4 @@
-var socketBase = process.env.REACT_APP_SOCKET_SERVER || 'http://localhost:9000/api'
+var socketBase = process.env.REACT_APP_SOCKET_SERVER || 'http://localhost:9000/'
 
 export const socketConfig = {
     socketServer: socketBase,

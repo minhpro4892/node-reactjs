@@ -43,16 +43,15 @@ export const socketApi = {
 export function socketAuth(username, connectedCallback, disconnectCallback, reconnect_attempt) {
     if (!socket) {
         socket = io(socketConfig.socketServer);
-        socket.on("connect", function(socket) {
-            // console.log('socket client connected:' + socket);
-            // socket.on("announcements", function(data) {
-            //     console.log(data.message);
-            // });
-            // socket.emit("greeting", {message: "Hi all people"});
+        socket.on("connect", () => {
+            console.log('socket client  connected');
+            console.log(socket);
+            const user = loadUserProfile();
             socket.emit(socketConfig.send.login, { username: username, token: user.token });
         });
         
         socket.on(socketConfig.send.login, function(payload){
+            console.log(payload);
             connectedCallback(payload);
         })
         socket.on("disconnect", function(socket) {

@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { logout } from '../../actions/userAction';
 import * as commonActions from '../../actions/commonAction';
-import { socketAuth } from '../../utils/socketUtils.js';
+import { socketApi, socketAuth } from '../../utils/socketUtils.js';
+import { socketConfig } from '../../constants/socketConfigs';
 import PropTypes from 'prop-types'
 import logo from './logo.svg';
 import './style.css';
@@ -33,6 +34,7 @@ class App extends Component {
     if (!user) {
       router.push(`/login?redirect=${path}`);
     } else {
+      socketApi.emit(socketConfig.send.article.updateArticle, "test");
       this.initSystemData();
     }
   }
@@ -57,6 +59,7 @@ class App extends Component {
 
   handleLogout() {
     const { user } = this.props;
+    socketApi.close();
     this.props.logout(user);
   }
 
@@ -89,7 +92,8 @@ App.contextTypes = {
 };
 
 App.childContextTypes = {
-
+  user: PropTypes.object,
+  socket: PropTypes.object
 }
 
 function mapStateToProps(state) {

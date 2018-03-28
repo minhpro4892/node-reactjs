@@ -47,7 +47,11 @@ ArticleModel.prototype.findOne = function (_params, tracer) {
     })
 }
 ArticleModel.prototype.create = function (_params, tracer) {
-    var article = new Article(_params);
+    var article = new Article({
+        title: _params.title,
+        content: _params.content,
+        author: _params.userId
+    });
     return article.save();
 }
 
