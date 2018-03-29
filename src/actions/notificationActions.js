@@ -21,3 +21,18 @@ export function createNotification(options= {}) {
        false
    )
 }; 
+
+export function getAllNotification(options={}) {
+    options = Object.assign({}, options);
+    const config ={
+        method: "post",
+        body: JSON.stringify(options)
+    }
+    return callApi(
+        getAllNotificationApi,
+        config,
+        null,
+        null,
+        false
+    )
+}

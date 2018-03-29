@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   initSystemData() {
-    socketAuth('minh', this.socketAuthenticationCallback, this.socketDisconnectCallback, this.socketReconnectAttemptCallback);
+    socketAuth(this.props.user.username, this.socketAuthenticationCallback, this.socketDisconnectCallback, this.socketReconnectAttemptCallback);
     this.props.commonActions.getUser();;
     this.props.commonActions.getArticle();
   }

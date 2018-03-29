@@ -48,9 +48,10 @@ class AddEdit extends Component {
             }
         } else {
             body.userId = this.props.user._id;
-            this.props.notificationActions.createNotification(this.props.user.username, body);
+            this.props.notificationActions.createNotification(body);
             socketApi.emit(socketConfig.send.article.addArticle, body);
             this.props.articleActions.createArticle(body).then(data => {
+                this.props.notificationActions.getAllNotification({userId: this.props.user._id});
             })
         }
         this.props.closeDialog();
