@@ -35,12 +35,12 @@ class Article extends Component {
         }
         socketApi.on(socketConfig.receive.article.addArticle, function (data) {
             console.log('Add article successfully');
-            
         });
         socketApi.on(socketConfig.receive.article.updateArticle, function (data) {
-            
+            console.log('Update article successfully');
         });
         socketApi.on(socketConfig.receive.article.deleteArticle, function (data) {
+            console.log('Delete article successfully');
             
         });
     }
@@ -63,7 +63,7 @@ class Article extends Component {
     }
 
     closeDialog() {
-        this.setState({ showDiaLog: false, detailItem: {} })
+        this.setState({ showDiaLog: false, detailItem: {}, editable: null })
     }
 
     handleMenuClick(eventKey, item) {
@@ -72,13 +72,21 @@ class Article extends Component {
             case 'Edit': {
                 self.props.articleActions.getOneArticle({ articleId: item._id }).then(data => {
                     if (data.ok) {
-                        self.setState({ detailItem: data.res, showDiaLog: true });
+                        self.setState({ detailItem: data.res, showDiaLog: true, editable: true });
                     }
                 })
                 break;
             }
             case 'Add': {
-                this.setState({ showDiaLog: true, detailItem: {} });
+                this.setState({ showDiaLog: true, detailItem: {}, editable: true });
+                break;
+            }
+            case 'Delete': {
+                self.props.articleActions.getOneArticle({ articleId: item._id }).then(data => {
+                    if (data.ok) {
+                        self.setState({ detailItem: data.res, showDiaLog: true, editable: false });
+                    }
+                })
                 break;
             }
             case 'Export': {
@@ -102,6 +110,9 @@ class Article extends Component {
                         <td scope="row">{item.content}</td>
                         <td scope="row">{
                             <Button bsStyle="primary" onClick={(e) => this.handleMenuClick("Edit", item)}>Edit</Button>
+                        }</td>
+                        <td scope="row">{
+                            <Button bsStyle="danger" onClick={(e) => this.handleMenuClick("Delete", item)}>Delete</Button>
                         }</td>
                     </tr>
                 )

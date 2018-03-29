@@ -6,6 +6,7 @@ import _ from "lodash";
 import { Modal, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import * as articleActions from '../../actions/articleAction';
+import * as notificationActions from '../../actions/notificationActions';
 import { socketApi } from '../../utils/socketUtils.js';
 import { socketConfig } from '../../constants/socketConfigs';
 
@@ -35,16 +36,21 @@ class AddEdit extends Component {
         }
         if (this.state.detailItem._id) {
             body.articleId = this.state.detailItem._id;
-            socketApi.emit(socketConfig.send.article.updateArticle, body);
-            this.props.articleActions.updateArticle(body).then(data => {
-                console.log(data);
-                // this.updateArticleList();
-            });
+            if (this.props.editable) {
+                socketApi.emit(socketConfig.send.article.updateArticle, body);
+                this.props.articleActions.updateArticle(body).then(data => {
+                });
+            } else {
+                let data = {articleId: body.articleId }
+                socketApi.emit(socketConfig.send.article.deleteArticle, data);
+                this.props.articleActions.deleteArticle(data).then(data => {
+                });
+            }
         } else {
             body.userId = this.props.user._id;
+            this.props.notificationActions.createNotification(this.props.user.username, body);
             socketApi.emit(socketConfig.send.article.addArticle, body);
             this.props.articleActions.createArticle(body).then(data => {
-                console.log(data);
             })
         }
         this.props.closeDialog();
@@ -54,6 +60,7 @@ class AddEdit extends Component {
     }
 
     render() {
+        console.log(this.props.showDiaLog)
         return (
             <div className="static-modal">
                 <Modal show={this.props.showDiaLog} onHide={() => this.props.closeDialog()}>
@@ -61,31 +68,33 @@ class AddEdit extends Component {
                         <Modal.Title>Modal heading</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <form>
+                            <FormGroup
+                                controlId="Title"
+                            >
+                                <ControlLabel>Title</ControlLabel>
+                                <FormControl
+                                    type="text"
+                                    value={this.state.detailItem.title}
+                                    placeholder="Enter Title"
+                                    onChange={(e) => this.handleInputChange("title", e)}
+                                    disabled={this.props.editable}
+                                />
+                            </FormGroup>
+                            <FormGroup
+                                controlId="content"
+                            >
+                                <ControlLabel>Content</ControlLabel>
+                                <FormControl
+                                    type="text"
+                                    value={this.state.detailItem.content}
+                                    placeholder="Enter content"
+                                    onChange={(e) => this.handleInputChange("content", e)}
+                                    disabled={this.props.editable}
+                                />
+                            </FormGroup>
+                        </form>
                     </Modal.Body>
-                    <form>
-                        <FormGroup
-                            controlId="Title"
-                        >
-                            <ControlLabel>Title</ControlLabel>
-                            <FormControl
-                                type="text"
-                                value={this.state.detailItem.title}
-                                placeholder="Enter Title"
-                                onChange={(e) => this.handleInputChange("title", e)}
-                            />
-                        </FormGroup>
-                        <FormGroup
-                            controlId="content"
-                        >
-                            <ControlLabel>Content</ControlLabel>
-                            <FormControl
-                                type="text"
-                                value={this.state.detailItem.content}
-                                placeholder="Enter content"
-                                onChange={(e) => this.handleInputChange("content", e)}
-                            />
-                        </FormGroup>
-                    </form>
                     <Modal.Footer>
                         <Button onClick={() => this.props.closeDialog()}>Close</Button>
                         <Button onClick={() => this.saveDialogArticle()} bsStyle="primary">Save</Button>
@@ -106,7 +115,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        articleActions: bindActionCreators(articleActions, dispatch)
+        articleActions: bindActionCreators(articleActions, dispatch),
+        notificationActions: bindActionCreators(notificationActions, dispatch)
     }
 }
 

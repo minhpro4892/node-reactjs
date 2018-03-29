@@ -34,7 +34,6 @@ class App extends Component {
     if (!user) {
       router.push(`/login?redirect=${path}`);
     } else {
-      socketApi.emit(socketConfig.send.article.updateArticle, "test");
       this.initSystemData();
     }
   }

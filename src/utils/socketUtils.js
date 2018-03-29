@@ -51,7 +51,7 @@ export function socketAuth(username, connectedCallback, disconnectCallback, reco
         });
         
         socket.on(socketConfig.send.login, function(payload){
-            console.log(payload);
+            console.log('debug socket get login event');
             connectedCallback(payload);
         })
         socket.on("disconnect", function(socket) {

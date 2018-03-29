@@ -1,14 +1,23 @@
+var socketConfigs = require('./socketConfig');
+
 module.exports = (io) => {
-    console.log('IO: ');
     io.on('connection', function (socket) {
-        console.log('socket connected:'+socket);
-        socket.on("addArticle", function(data) {
-            console.log(data);
-            socket.emit("addArticle", {message: "Add new article"})
+        console.log('socket connected:' + socket);
+        socket.on(socketConfigs.receive.login, function (data) {
+            console.log('debug get login event');
+            socket.emit(socketConfigs.send.login, data);
         });
-        socket.on("login", function(data) {
-            console.log(data);
-            socket.emit("login", data);
+        socket.on(socketConfigs.receive.addArticle, function(data) {
+            console.log('debug get addArticle event');
+            socket.emit(socketConfigs.send.addArticle, {message: "Add new article successfully"})
+        });
+        socket.on(socketConfigs.receive.updateArticle, function (data) {
+            console.log('debug get updateArticle event');
+            socket.emit(socketConfigs.send.updateArticle, { message: "Update article successfully" })
+        });
+        socket.on(socketConfigs.receive.deleteArticle, function (data) {
+            console.log('debug get deleteArticle event');
+            socket.emit(socketConfigs.send.deleteArticle, { message: "Delete article successfully" })
         });
     });
 
