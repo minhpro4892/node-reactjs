@@ -36,3 +36,18 @@ export function getAllNotification(options={}) {
         false
     )
 }
+
+export function updateNotification(options={}) {
+    options = Object.assign({}, options);
+    const config = {
+        method: "post",
+        body: JSON.stringify(options)
+    }
+    return callApi(
+        updateNotificationApi,
+        config,
+        null,
+        null, 
+        false
+    )
+}

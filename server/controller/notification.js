@@ -21,4 +21,10 @@ NotificationCtrl.prototype.getAll = function (params, tracer) {
     return self.setting.getAllNotification(params, tracer);
 }
 
+NotificationCtrl.prototype.update = function (params, tracer) {
+    var self = this;
+    return self.setting.updateNotification(params, tracer);
+}
+
+
 module.exports = NotificationCtrl;

@@ -32,11 +32,13 @@ class AddEdit extends Component {
     saveDialogArticle() {
         let body = {
             title: this.state.detailItem.title,
-            content: this.state.detailItem.content
+            content: this.state.detailItem.content,
+            userId: this.props.user._id
         }
         if (this.state.detailItem._id) {
             body.articleId = this.state.detailItem._id;
             if (this.props.editable) {
+                this.props.notificationActions.updateNotification(body)
                 socketApi.emit(socketConfig.send.article.updateArticle, body);
                 this.props.articleActions.updateArticle(body).then(data => {
                 });
@@ -47,7 +49,6 @@ class AddEdit extends Component {
                 });
             }
         } else {
-            body.userId = this.props.user._id;
             this.props.notificationActions.createNotification(body);
             socketApi.emit(socketConfig.send.article.addArticle, body);
             this.props.articleActions.createArticle(body).then(data => {
