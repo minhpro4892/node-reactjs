@@ -39,4 +39,14 @@ module.exports = function (app) {
                 res.send({ error: error, data: null });
             });
     });
+
+    app.post(api.delete, function (req, res, next) {
+        var notificationCtrl = new NotificationCtrl({});
+        notificationCtrl.delete(req.body).then(function (response) {
+            res.send({ error: null, data: response });
+        })
+            .catch(function (error) {
+                res.send({ error: error, data: null });
+            });
+    });
 }

@@ -1,3 +1,5 @@
+import { EROFS } from 'constants';
+
 var util = require('util');
 var async = require('async');
 var Promise = require('bluebird');
@@ -88,7 +90,33 @@ SettingModel.prototype.updateNotification = function (params, tracer) {
 }
 
 SettingModel.prototype.deleteNotification = function (params, tracer) {
-
+    return new Promise.resolve(function(resolve, reject) {
+        RedisArticle.LINDEX("notifications"+params.userId, params.index, function(error, item) {
+            if (!error) {
+                var elem = JSON.parse(item);
+                try {
+                    if (elem && elem._id == params._id) {
+                        RedisArticle.DEL("notifications"+params.userId, params.index, JSON.stringify(elem), function(error, response){
+                            if (!error) {
+                                logger.log("DEBUG", "SettingModel.deleteNotification", 'remove elem from list', error, null, tracer);
+                                resolve(error);
+                            } else {
+                                logger.log("ERROR", "SettingModel.deleteNotification", 'error', null, error, tracer);
+                                reject(error);
+                            }
+                        });
+                    }
+                    
+                } catch (error) {
+                    logger.log("ERROR", "SettingModel.deleteNotification", 'error', null, error, tracer);
+                    reject(error);
+                }
+            } else {
+                logger.log("ERROR", "SettingModel.deleteNotification", 'error', null, error, tracer);
+                reject(error);
+            }
+        })
+    });
 }
 
 module.exports = SettingModel;

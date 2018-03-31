@@ -26,5 +26,9 @@ NotificationCtrl.prototype.update = function (params, tracer) {
     return self.setting.updateNotification(params, tracer);
 }
 
+NotificationCtrl.prototype.delete = function(params, tracer) {
+    var self = this;
+    return self.setting.deleteNotification(params, tracer);
+}
 
 module.exports = NotificationCtrl;

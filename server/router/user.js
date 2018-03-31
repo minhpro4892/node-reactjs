@@ -100,10 +100,10 @@ module.exports = function (app) {
         if (req.session) {
             req.session.destroy(function (error, response) {
                 if (error) return next(error);
-                res.send({ res: {} });
+                res.send({ error: null, res: {} });
             });
         } else {
-            res.send({ res: {} });
+            res.send({ error: null, res: {} });
         }
     });
 }
