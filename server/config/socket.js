@@ -1,8 +1,14 @@
 var socketConfigs = require('./socketConfig');
-
+var util = require('./util');
 module.exports = (io) => {
     io.on('connection', function (socket) {
         console.log('socket connected:' + socket);
+        //join room
+        socket.on(socketConfigs.create_room, function(room) {
+            socket.join(room);
+            io.in(room).emit(socketConfigs.join_room, "success");
+            io.to(room).emit(socketConfigs.update_total_number, { total: util.getNumberUsers(io, room)})
+        })
         socket.on(socketConfigs.receive.login, function (data) {
             console.log('debug get login event');
             socket.emit(socketConfigs.send.login, data);

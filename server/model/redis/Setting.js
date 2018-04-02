@@ -1,5 +1,3 @@
-import { EROFS } from 'constants';
-
 var util = require('util');
 var async = require('async');
 var Promise = require('bluebird');
