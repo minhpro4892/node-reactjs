@@ -56,7 +56,8 @@ export function updateArticle(options = {}) {
         false
     );
 }
-function deleteArticle(options = {}) {
+
+export function deleteArticle(options = {}) {
     options = Object.assign({}, options);
     const config = {
         method: "post",

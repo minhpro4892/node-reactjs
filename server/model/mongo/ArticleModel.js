@@ -16,7 +16,7 @@ ArticleModel.prototype.find = function (_params, tracer) {
             .sort(_params.sort)
             .limit(_params.limit || 10)
             .skip(_params.skip || 0)
-            .populate('author'),
+            .populate('author', "username firstName lastName email address roleName isActive"),
         Article.count()
     ])
         .spread(function (list, total) {
@@ -77,7 +77,7 @@ ArticleModel.prototype.update = function (_params, tracer) {
     });
 }
 
-ArticleModel.prototype.delete = function (_params) {
+ArticleModel.prototype.delete = function (_params, tracer) {
     return Article.findOne({ _id: _params.articleId })
         .then(function (foundArticleById) {
             if (!foundArticleById) {
@@ -94,6 +94,24 @@ ArticleModel.prototype.delete = function (_params) {
             logger.log("ERROR", "ArticleModel.delete", "error", null, error, tracer);
             return error;
         });
+}
+
+ArticleModel.prototype.findAndDelete = function(_params, tracer) {
+    return Promise.all([
+        Article.remove({ _id: { $in: _params.ids} }),
+        Article.count()
+    ])
+    .spread(function(data, count) {
+        logger.log('DEBUG', 'ArticleModel.find', 'remove multiple article', data, null, tracer);
+        return {
+            itemAfterDelete: count - data.n,
+            total:  count
+        };
+    })
+    .catch(function(error) {
+        logger.log('ERROR', 'ArticleModel.find', 'error', null, error, tracer);
+        return error;
+    });
 }
 
 module.exports = ArticleModel;

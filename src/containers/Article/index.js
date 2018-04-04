@@ -33,6 +33,12 @@ class Article extends Component {
         if (payload.res && payload.res.username) {
             this.props.socketActions.socketAuthenticated(payload.res.username);
         }
+        socketApi.on(socketConfig.join_room, function(data) {
+            console.log('Joined room successfully');
+        });
+        socketApi.on(socketConfig.update_total_number, function(data){
+            console.log('Update total number: '+JSON.stringify(data));
+        });
         socketApi.on(socketConfig.receive.article.addArticle, function (data) {
             console.log('Add article successfully');
         });

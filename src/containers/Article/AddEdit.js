@@ -35,6 +35,8 @@ class AddEdit extends Component {
             content: this.state.detailItem.content,
             userId: this.props.user._id
         }
+        // create room
+        socketApi.emit(socketConfig.create_room, "room_1");
         if (this.state.detailItem._id) {
             body.articleId = this.state.detailItem._id;
             if (this.props.editable) {
@@ -62,7 +64,6 @@ class AddEdit extends Component {
     }
 
     render() {
-        console.log(this.props.showDiaLog)
         return (
             <div className="static-modal">
                 <Modal show={this.props.showDiaLog} onHide={() => this.props.closeDialog()}>

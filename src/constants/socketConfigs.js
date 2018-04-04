@@ -16,5 +16,9 @@ export const socketConfig = {
             updateArticle: "updateArticle",
             deleteArticle: "deleteArticle"
         }
-    }
+    },
+    create_room: "create room",
+    join_room: "joined room",
+    update_total_number: "total_number"
+
 }

@@ -77,4 +77,9 @@ ArticleCtrl.prototype.delete = function (params, tracer) {
     return self.articleModel.delete(params, tracer);
 }
 
+ArticleCtrl.prototype.findAndDelete = function(params, tracer) {
+    var self = this;
+    return self.articleModel.findAndDelete(params, tracer);
+}
+
 module.exports = ArticleCtrl;

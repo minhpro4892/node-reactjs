@@ -31,7 +31,7 @@ class User extends Component {
         switch(evenKey) {
             case 'Edit': {
                 this.props.getOneUser({ userId: data._id })
-                .then(function(data) {
+                .then((data) =>{
                     if (data.ok) {
                         this.setState({ detailItem: data.res });
                     }

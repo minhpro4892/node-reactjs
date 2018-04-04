@@ -8,7 +8,8 @@ var api = {
     "update": "/api/article/update",
     "delete": "/api/article/delete",
     "findOne": "/api/article/findOne",
-    "export": "/api/article/export"
+    "export": "/api/article/export",
+    "multiDelete": "/api/article/multi-delete"
 }
 
 module.exports = function (app) {
@@ -30,6 +31,16 @@ module.exports = function (app) {
             .catch(function (error) {
                 res.send({ error: error, res: null })
             });
+    });
+
+    app.post(api.multiDelete, function(req, res, next) {
+        var articleCtrl = new ArticleCtrl(req.body);
+        articleCtrl.findAndDelete(req.body).then(function(response) {
+            res.send({ error: null, res: response });
+        })
+        .catch(function(error) {
+            res.send({ error: error, res: null });
+        });
     });
 
     app.post(api.export, function (req, res, next) {
