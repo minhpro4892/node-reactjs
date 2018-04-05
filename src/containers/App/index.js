@@ -90,10 +90,10 @@ App.contextTypes = {
   store: PropTypes.object.isRequired,
 };
 
-App.childContextTypes = {
-  user: PropTypes.object,
-  socket: PropTypes.object
-}
+// App.childContextTypes = {
+//   user: PropTypes.object,
+//   socket: PropTypes.object
+// }
 
 function mapStateToProps(state) {
     const { auth } = state;

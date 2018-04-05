@@ -17,6 +17,7 @@ import Login from './containers/Login'
 import DashBoard from './containers/DashBoard'
 import User from './containers/User'
 import Article from './containers/Article'
+import ReservationList from './containers/Reservation/ReservationList'
 import jquery from "jquery";
 window.$ = window.jQuery = jquery;
 
@@ -35,6 +36,8 @@ ReactDOM.render(
 				<Route path="/users" component={User}>
 				</Route>
 				<Route path="/articles" component={Article}>
+				</Route>
+				<Route path="/reservation" component={ReservationList}>
 				</Route>
 			</Route>
 			<Route path="/page-not-found" component={NotFound} />

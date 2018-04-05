@@ -16,12 +16,13 @@ class SideBar extends Component {
         var defaultMenu = [
             { url: '/', title: "Dashboard" },
             { url: '/users', title: "User" },
-            { url: '/articles', title: "Article"}
+            { url: '/articles', title: "Article"},
+            { url: '/reservation', title: "Reservation"}
         ]
 
-        var menuItems = defaultMenu.map((item) => {
+        var menuItems = defaultMenu.map((item, index) => {
             return (
-                <li className={"menu-item active" ? "menu-item" : "menu-item active"}>
+                <li key={index} className={"menu-item active" ? "menu-item" : "menu-item active"}>
                     <Link to={item.url}>{item.title}</Link>
                 </li>
             )
