@@ -17,5 +17,8 @@ module.exports = {
     }),
     "/api/article/delete": Joi.object().keys({
         articleId: Joi.string().required()
+    }),
+    "/api/article/multi-delete": Joi.object().keys({
+        ids: Joi.array().unique(),
     })
 }

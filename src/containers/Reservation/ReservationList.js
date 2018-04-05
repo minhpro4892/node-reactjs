@@ -3,12 +3,14 @@ import './ReservationList.style.css';
 import PropTypes from 'prop-types';
 import _ from "lodash";
 import {
-    Table
+    Table,
+    OverlayTrigger,
+    Popover
 } from "react-bootstrap";
-import moment, { duration } from "moment";
+import moment from "moment";
 
 const driverInfoLength = 460;
-var minutesDay = 24*60;
+var minutesDay = 24 * 60;
 class ReservationList extends Component {
     constructor() {
         super();
@@ -19,69 +21,69 @@ class ReservationList extends Component {
 
     prepareDayData() {
         var bookings = [
-                {
-                    bookId: "14281",
-                    fleetId: "1111",
-                    request: {
-                        pickup: {
-                            address: "126 Ông Ích Khiêm, Da Nang, Vietnam",
-                            geo: [
-                                108.21255,
-                                16.075015
-                            ],
-                            zipCode: "Da Nang",
-                            businessName: ""
-                        },
-                        destination: {
-                            address: "2 Tháng 9, Hòa Cường Nam, Da Nang, Vietnam",
-                            geo: [
-                                108.2230984,
-                                16.0294404
-                            ],
-                            zipCode: "",
-                            businessName: "2 Tháng 9"
-                        },
-                        pickUpTime: "2015-08-27T17:00:00.000Z",
-                        vehicleType: [
-                            "Black carf"
+            {
+                bookId: "14281",
+                fleetId: "1111",
+                request: {
+                    pickup: {
+                        address: "126 Ông Ích Khiêm, Da Nang, Vietnam",
+                        geo: [
+                            108.21255,
+                            16.075015
                         ],
-                        estimate: {
-                            estimateValue: 0
-                        }
-                    }
-                },
-                {
-                    bookId: "14281",
-                    fleetId: "1111",
-                    request: {
-                        pickup: {
-                            address: "126 Ông Ích Khiêm, Da Nang, Vietnam",
-                            geo: [
-                                108.21255,
-                                16.075015
-                            ],
-                            zipCode: "Da Nang",
-                            businessName: ""
-                        },
-                        destination: {
-                            address: "2 Tháng 9, Hòa Cường Nam, Da Nang, Vietnam",
-                            geo: [
-                                108.2230984,
-                                16.0294404
-                            ],
-                            zipCode: "",
-                            businessName: "2 Tháng 9"
-                        },
-                        pickUpTime: "2015-08-27T20:00:00.000Z",
-                        vehicleType: [
-                            "Black carf"
+                        zipCode: "Da Nang",
+                        businessName: ""
+                    },
+                    destination: {
+                        address: "2 Tháng 9, Hòa Cường Nam, Da Nang, Vietnam",
+                        geo: [
+                            108.2230984,
+                            16.0294404
                         ],
-                        estimate: {
-                            estimateValue: 120
-                        }
+                        zipCode: "",
+                        businessName: "2 Tháng 9"
+                    },
+                    pickUpTime: "2015-08-27T17:00:00.000Z",
+                    vehicleType: [
+                        "Black carf"
+                    ],
+                    estimate: {
+                        estimateValue: 0
                     }
                 }
-            ]
+            },
+            {
+                bookId: "14281",
+                fleetId: "1111",
+                request: {
+                    pickup: {
+                        address: "126 Ông Ích Khiêm, Da Nang, Vietnam",
+                        geo: [
+                            108.21255,
+                            16.075015
+                        ],
+                        zipCode: "Da Nang",
+                        businessName: ""
+                    },
+                    destination: {
+                        address: "2 Tháng 9, Hòa Cường Nam, Da Nang, Vietnam",
+                        geo: [
+                            108.2230984,
+                            16.0294404
+                        ],
+                        zipCode: "",
+                        businessName: "2 Tháng 9"
+                    },
+                    pickUpTime: "2015-08-27T20:00:00.000Z",
+                    vehicleType: [
+                        "Black carf"
+                    ],
+                    estimate: {
+                        estimateValue: 120
+                    }
+                }
+            }
+        ]
 
         var caculatedData = [];
         _.map(bookings, (booking, index) => {
@@ -89,23 +91,23 @@ class ReservationList extends Component {
             var hour = pickUpTimeToDate.hours();
             var minutes = pickUpTimeToDate.minutes();
             var positionStart = hour + minutes;
-            var duration = booking.request.estimate.estimateValue ? booking.request.estimate.estimateValue/60 : 0
+            var duration = booking.request.estimate.estimateValue ? booking.request.estimate.estimateValue / 60 : 0
             var positionEnd = positionStart + duration;
             // Change data to Percent
             var caculatedPosition = {
-                positionStart: positionStart/minutesDay,
-                duration: duration/minutesDay,
-                positionEnd: positionEnd/minutesDay
+                positionStart: positionStart / minutesDay,
+                duration: duration / minutesDay,
+                positionEnd: positionEnd / minutesDay
             }
             caculatedData.push(caculatedPosition);
         });
-        return caculatedData;    
+        return caculatedData;
     }
 
-    getDayList () {
+    getDayList() {
         var contentLength = this.refs.reservationContainer ? (this.refs.reservationContainer.offsetWidth - driverInfoLength) : 0;
         var timeTitles = [];
-        for (var i=1; i<=24; i++) {
+        for (var i = 1; i <= 24; i++) {
             if (i > 12) {
                 timeTitles.push(i - 12 + 'PM');
             } else if (i == 12) {
@@ -117,34 +119,54 @@ class ReservationList extends Component {
 
         var bookings = this.prepareDayData();
 
+        const popoverClickRootClose = (booking) => {
+            <Popover id="popover-trigger-click-root-close" title="Popover bottom">
+                <p>{'Position Start:' + booking.positionStart * contentLength}</p>
+                <p>{'Duration:' + booking.duration * contentLength}</p>
+                <p>{'Position Start:' + booking.positionEnd * contentLength}</p>
+            </Popover>
+        }
+
         return (
             <React.Fragment>
                 <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <th style={{ width: `${driverInfoLength}px`}}></th>
+                            <th style={{ width: `${driverInfoLength}px` }}></th>
                             {
                                 _.map(timeTitles, (title, index) => {
-                                    return <th style={{ width: `${contentLength/24}px` }}>{title}</th>
+                                    return (
+                                        <th style={{ width: `${contentLength / 24}px` }} key={index}>{title}</th>
+                                    )
                                 })
                             }
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style={{ width: `${driverInfoLength}px` }}></td>
-                            { _.map(bookings, (booking, index) => {
-                                <td style={{ width: `${contentLength}px` }}>
-                                    <div style={{
-                                        left: `${booking.positionStart * contentLength}px`,
-                                        width: `${duration*contentLength}px`
-                                    }}>
-
-                                    </div>
-                                </td>
-                            })  
-                            }
-                        </tr>
+                        {
+                            _.map(bookings, (booking, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td style={{ width: `${driverInfoLength}px` }}></td>
+                                        <td style={{ width: `${contentLength}px` }}>
+                                            <OverlayTrigger
+                                                trigger="click"
+                                                rootClose
+                                                placement="bottom"
+                                                overlay={popoverClickRootClose(booking)}
+                                            >
+                                                <div style={{
+                                                    left: `${booking.positionStart * contentLength}px`,
+                                                    width: `${booking.duration * contentLength}px`,
+                                                    right: `${booking.positionEnd * contentLength}px`
+                                                }}>
+                                                </div>
+                                            </OverlayTrigger>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </Table>
             </React.Fragment>
