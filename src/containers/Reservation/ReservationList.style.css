@@ -1,3 +1,64 @@
 .reservation-list-container {
     margin: 50px 0;
 }
+
+.reservation-list-container td.header {
+    position: relative;
+    height: 40px;
+}
+.reservation-list-container table thead {
+    background-color: #333333;
+}
+
+.reservation-list-container table, .reservation-list-container table thead tr td {
+    border: none;
+}
+
+.reservation-list-container .title-item {
+    height: 40px;
+    position: absolute;
+    font-weight: bold;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: -15px;
+    color: #000000;
+}
+
+.reservation-list-container .title-item p.title {
+    display: inline-block;
+    height: 100%;
+    line-height: 40px;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0px;
+    padding: 0px;
+}
+
+.reservation-list-container td.title {
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.reservation-list-container td.drawing-item {
+    height: 50px;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+.reservation-block:hover {
+    border: 1px solid rgb(90, 200, 249);
+    color: rgb(166, 220, 246);
+    z-index: 1;
+}
+
+.reservation-block {
+    background-color: rgb(166, 220, 246);
+    height: 100%;
+    position: absolute;
+    cursor: pointer;
+    top: 0px;
+}

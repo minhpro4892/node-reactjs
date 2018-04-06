@@ -79,7 +79,7 @@ class ReservationList extends Component {
                         "Black carf"
                     ],
                     estimate: {
-                        estimateValue: 120
+                        estimateValue: 12000
                     }
                 }
             }
@@ -90,7 +90,7 @@ class ReservationList extends Component {
             var pickUpTimeToDate = moment(booking.request.pickUpTime);
             var hour = pickUpTimeToDate.hours();
             var minutes = pickUpTimeToDate.minutes();
-            var positionStart = hour + minutes;
+            var positionStart = hour * 60 + minutes;
             var duration = booking.request.estimate.estimateValue ? booking.request.estimate.estimateValue / 60 : 0
             var positionEnd = positionStart + duration;
             // Change data to Percent
@@ -104,10 +104,10 @@ class ReservationList extends Component {
         return caculatedData;
     }
 
-    getDayList() {
-        var contentLength = this.refs.reservationContainer ? (this.refs.reservationContainer.offsetWidth - driverInfoLength) : 0;
+    getDayList(popoverClickRootClose, bookings) {
+        var contentLength = this.refs.reservationContainer && this.refs.reservationContainer.offsetWidth ? (this.refs.reservationContainer.offsetWidth - driverInfoLength) : 0;
         var timeTitles = [];
-        for (var i = 1; i <= 24; i++) {
+        for (var i = 0; i < 24; i++) {
             if (i > 12) {
                 timeTitles.push(i - 12 + 'PM');
             } else if (i == 12) {
@@ -117,56 +117,51 @@ class ReservationList extends Component {
             }
         }
 
-        var bookings = this.prepareDayData();
-
-        const popoverClickRootClose = (booking) => {
-            <Popover id="popover-trigger-click-root-close" title="Popover bottom">
-                <p>{'Position Start:' + booking.positionStart * contentLength}</p>
-                <p>{'Duration:' + booking.duration * contentLength}</p>
-                <p>{'Position Start:' + booking.positionEnd * contentLength}</p>
-            </Popover>
-        }
-
         return (
             <React.Fragment>
                 <Table striped bordered condensed hover>
                     <thead>
                         <tr>
-                            <th style={{ width: `${driverInfoLength}px` }}></th>
-                            {
-                                _.map(timeTitles, (title, index) => {
-                                    return (
-                                        <th style={{ width: `${contentLength / 24}px` }} key={index}>{title}</th>
-                                    )
-                                })
-                            }
+                            <td style={{ width: `${driverInfoLength}px` }}></td>
+                            <td style={{ width: `${contentLength}px` }} className="header">
+                                <div className="title-item">
+                                {
+                                    _.map(timeTitles, (title, index) => {
+                                        return (
+                                            <p className="title" style={{ width: `${contentLength / 24}px` }} key={index}>{title}</p>
+                                        )
+                                    })
+                                }
+                                </div>
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            _.map(bookings, (booking, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td style={{ width: `${driverInfoLength}px` }}></td>
-                                        <td style={{ width: `${contentLength}px` }}>
-                                            <OverlayTrigger
-                                                trigger="click"
-                                                rootClose
-                                                placement="bottom"
-                                                overlay={popoverClickRootClose(booking)}
-                                            >
-                                                <div style={{
-                                                    left: `${booking.positionStart * contentLength}px`,
-                                                    width: `${booking.duration * contentLength}px`,
-                                                    right: `${booking.positionEnd * contentLength}px`
-                                                }}>
-                                                </div>
-                                            </OverlayTrigger>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
+                        <tr>
+                            <td style={{ width: `${driverInfoLength}px` }}></td>
+                            <td style={{ width: `${contentLength}px` }} className="drawing-item">
+                            {
+                                _.map(bookings, (booking, index) => {
+                                    return (
+                                        <OverlayTrigger
+                                            trigger="click"
+                                            rootClose
+                                            placement="bottom"
+                                            overlay={popoverClickRootClose(booking, contentLength)}
+                                            key={index}
+                                        >
+                                            <div className="reservation-block" style={{
+                                                left: `${booking.positionStart * contentLength}px`,
+                                                width: `${booking.duration * contentLength}px`,
+                                                right: `${booking.positionEnd * contentLength}px`
+                                            }}>
+                                            </div>
+                                        </OverlayTrigger>
+                                    )
+                                })
+                            }
+                            </td>
+                        </tr>
                     </tbody>
                 </Table>
             </React.Fragment>
@@ -174,10 +169,19 @@ class ReservationList extends Component {
     }
 
     render() {
+        var bookings = this.prepareDayData();
+        const popoverClickRootClose = (booking, contentLength) => {
+            <Popover id="popover-trigger-click-root-close" title="Popover bottom" style={{ width: "100px", height: "100px", color: "red"}}>
+                <p>{'Position Start:' + booking.positionStart * contentLength}</p>
+                <p>{'Duration:' + booking.duration * contentLength}</p>
+                <p>{'Position Start:' + booking.positionEnd * contentLength}</p>
+            </Popover>
+        }
+
         return (
             <div className="reservation-list-container" ref="reservationContainer">
                 {
-                    this.getDayList()
+                    this.getDayList(popoverClickRootClose, bookings)
                 }
             </div>
         )
