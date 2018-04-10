@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import moment from "moment";
 import { Time } from "../../constants/commonData";
+import {connect} from "react-redux";
 
 const driverInfoLength = 460;
 class ReservationList extends Component {
@@ -167,4 +168,4 @@ class ReservationList extends Component {
     }
 }
 
-export default ReservationList;
+export default connect()(ReservationList);

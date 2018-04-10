@@ -4,7 +4,7 @@ module.exports = {
     //------------------User------------------------//
     "/api/user/create": Joi.object().keys({
         username: Joi.string().required().lowercase(),
-        phoneNumber: Joi.string().allow('', null).trim(),
+        phoneNumber: Joi.string().required().regex(/\+[0-9]$/g).trim(),
         email: Joi.string().email().required(),
         birthyear: Joi.number().integer().min(1900).max(2150),
         roleName: Joi.boolean().required(),
@@ -19,7 +19,7 @@ module.exports = {
         userId: Joi.string().required(),
         username: Joi.string().allow('', null).trim(),
         phoneNumber: Joi.string().allow('', null).trim(),
-        email: Joi.string().email(),
+        email: Joi.string().email().trim().allow(null, ""),
         roleName: Joi.boolean(),
         isActive: Joi.boolean()
     }),
