@@ -69,6 +69,8 @@ var AccountSchema = new Schema({
     }
 });
 
+AccountSchema.index({phoneNumber: 1, email: 1, username: 1}, {unique: true});
+
 AccountSchema.pre('save', function(next) {
     this.set('userId', this._id);
     this.set('fullName', `${this.firstName}${this.lastName}`);
