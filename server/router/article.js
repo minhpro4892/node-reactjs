@@ -13,8 +13,8 @@ var api = {
 }
 
 module.exports = function (app) {
-    app.get(api.find, function (req, res, next) {
-        var articleCtrl = new ArticleCtrl({});
+    app.post(api.find, function (req, res, next) {
+        var articleCtrl = new ArticleCtrl(req.body);
         articleCtrl.find(req.body).then(function (response) {
             res.send({ error: null, res: response });
         })

@@ -14,7 +14,17 @@ util.inherits(ArticleCtrl, BaseCtrl);
 
 ArticleCtrl.prototype.find = function (params, tracer) {
     var self = this;
-    return self.articleModel.find(params, tracer);   
+    var page = params.page || 0;
+    var limit = params.limit || 10;
+    var skip = page * limit;
+    var sort = params.sort || { createdDate: -1 };
+    var query = params.query || {};
+    return self.articleModel.find({
+        limit,
+        skip,
+        sort,
+        query
+    }, tracer);   
 }
 
 ArticleCtrl.prototype.findOne = function (params, tracer) {
